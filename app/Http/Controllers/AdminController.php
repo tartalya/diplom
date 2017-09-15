@@ -55,7 +55,6 @@ class AdminController extends Controller
                 break;
 
             case 'edit':
-                echo 'editing';
 
                 if (!empty(Request::input('id')) && !empty(Request::input('name')) && !empty(Request::input('login')) && !empty(Request::input('email'))) {
 
