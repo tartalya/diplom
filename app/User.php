@@ -25,8 +25,22 @@ class User extends Model
 
     public static function GetAll()
         {
-        
+
         return DB::table('users')->get();
         }
-    
+
+    public static function Edit($id, $newName, $newLogin, $newEmail, $newPassword)
+        {
+
+        if (empty($newPassword)) {
+
+            $query = DB::table('users')->where('id', $id)
+                    ->update(array('name' => $newName, 'login' => $newLogin, 'email' => $newEmail));
+        } else {
+
+            $query = DB::table('users')->where('id', $id)
+                    ->update(array('name' => $newName, 'login' => $newLogin, 'email' => $newEmail, 'password' => md5($newPassword)));
+        }
+        }
+
     }

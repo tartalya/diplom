@@ -109,6 +109,12 @@
                 </main>
             </div>
         </div>
+        
+        @if (isset($msg))
+        <br><br>
+    <center><font color="red">{{$msg}}</font></center>
+
+    @endif
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
