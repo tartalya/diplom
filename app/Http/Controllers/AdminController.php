@@ -48,7 +48,7 @@ class AdminController extends Controller
 
         var_dump($_POST);
 
-        switch ($_POST['action']) {
+        switch (Request::input('action')) {
 
             case 'delete':
                 echo 'deleting';
