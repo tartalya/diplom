@@ -27,9 +27,7 @@ class Faq extends Model
     public static function GetCategoryList()
         {
 
-        $result = DB::select('SELECT * FROM categories ORDER BY id');
-
-        return $result;
+        return DB::select('SELECT * FROM categories ORDER BY id');
         }
 
     public static function Count()
@@ -74,6 +72,14 @@ class Faq extends Model
                             ->select('qa.*', 'categories.category_name', 'status.status_name')
                             ->get();
         }
+        }
+
+    public static function UpdateQuestion($id, $category, $status, $questioner_name, $questioner_email, $question, $answer)
+        {
+
+        return DB::table('qa')->where('id', $id)
+                        ->update(array('category_id' => $category, 'status_id' => $status, 'questioner_name' => $questioner_name,
+                            'questioner_email' => $questioner_email, 'question' => $question, 'answer' => $answer));
         }
 
     }

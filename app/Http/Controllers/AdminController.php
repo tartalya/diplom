@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
 use Request;
+use Redirect;
 
 class AdminController extends Controller
     {
@@ -49,9 +50,6 @@ class AdminController extends Controller
     public function EditUser()
         {
 
-
-        //var_dump($_POST);
-
         switch (Request::input('action')) {
 
             case 'delete':
@@ -83,48 +81,78 @@ class AdminController extends Controller
                 }
 
                 break;
-                
+
             case 'add':
-                
-                
+
+
                 if (!empty(Request::input('name')) && !empty(Request::input('login')) && !empty(Request::input('email')) && !empty(Request::input('password'))) {
-                    
+
                     \App\User::Add(Request::input('name'), Request::input('login'), Request::input('email'), Request::input('password'));
                     return redirect()->route('manageUsers');
-                
                 } else {
-                    
+
                     return $this->ManageUsers('Все поля обязательны для заполнения');
                 }
-                
+
                 break;
         }
         }
 
-        public function ShowAnswerPage()
-            {
-            
-            $questions = \App\Faq::GetAll(1);
-            
-            
-            return view('admin.answer')->withContent(self::$baseContent)
-                    ->withQuestions($questions)
-                    ->withCategories(self::$categories)
-                    ->withStatuses(self::$statuses)
-                    ->withDescription('Список вопросов нуждающихся в ответе');
-            }
-        
-      public function ShowManagePage()
-            {
-            
-            $questions = \App\Faq::GetAll();
-            
-            
-            return view('admin.answer')->withContent(self::$baseContent)
-                    ->withQuestions($questions)
-                    ->withCategories(self::$categories)
-                    ->withStatuses(self::$statuses)
-                    ->withDescription('Список всех вопросов');
-            }
-            
+    public function ShowAnswerPage($msg = '')
+        {
+
+        $questions = \App\Faq::GetAll(1);
+
+
+        return view('admin.answer')->withContent(self::$baseContent)
+                        ->withQuestions($questions)
+                        ->withCategories(self::$categories)
+                        ->withStatuses(self::$statuses)
+                        ->withDescription('Список вопросов нуждающихся в ответе')
+                        ->withMsg($msg);
+        }
+
+    public function ShowManagePage($msg = '')
+        {
+
+        $questions = \App\Faq::GetAll();
+
+
+        return view('admin.answer')->withContent(self::$baseContent)
+                        ->withQuestions($questions)
+                        ->withCategories(self::$categories)
+                        ->withStatuses(self::$statuses)
+                        ->withDescription('Список всех вопросов')
+                        ->withMsg($msg);
+        }
+
+    public function ManageAnswer()
+        {
+
+        //var_dump($_POST);
+
+        switch (Request::input('action')) {
+
+            case 'edit':
+
+                if (!empty(Request::input('category')) && !empty(Request::input('status')) && !empty(Request::input('questioner_name')) && !empty(Request::input('questioner_email')) && !empty(Request::input('question')) && !empty(Request::input('answer')) && !empty(Request::input('id'))) {
+                    \App\Faq::UpdateQuestion(Request::input('id'), Request::input('category'), Request::input('status'), Request::input('questioner_name'), Request::input('questioner_email'), Request::input('question'), Request::input('answer'));
+                    return Redirect::back()->with('msg', 'Вопрос успешно обновлен');
+                } else {
+
+                    return Redirect::back()->with('msg', 'Ошибка обновления данных');
+                }
+                break;
+
+            case 'delete':
+
+                \App\Faq::Remove();
+
+                break;
+        }
+
+
+        //return Redirect::back()->with('msg','Изменение успешно');
+        }
+
     }

@@ -12,10 +12,8 @@ class FaqController extends Controller
         {
 
         $faq = \App\Faq::GetAllApproved();
-
-        //$categories = \App\Faq::GetCategoryList();
         $categories = \App\Categories::GetAll();
-        
+
         return view('index')->withOutput($faq)->withCatlist($categories);
         }
 

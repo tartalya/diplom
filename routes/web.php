@@ -25,6 +25,7 @@ Route::get('/ask', 'FaqController@ShowAskForm')->name('ask');
 Route::post('/ask', 'FaqController@Ask');
 
 Route::get('/admin/answer/add', 'AdminController@ShowAnswerPage')->name('answer');
-Route::post('/admin/answer/add', 'AdminController@SetAnswer');
+Route::post('/admin/answer/add', 'AdminController@ManageAnswer');
 
 Route::get('/admin/answer/manage', 'AdminController@ShowManagePage')->name('manage');
+Route::post('/admin/answer/manage', 'AdminController@ManageAnswer');
