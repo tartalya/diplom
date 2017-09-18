@@ -50,7 +50,7 @@ class Faq extends Model
         public static function AddQuestion($questionerName, $questionerEmail, $question, $category)
             {
             
-            return DB::table('qa')->insert(array('category_id' => $category, 'questioner_name' => $questionerName, 'questioner_email' => $questionerEmail, 'question' => $question));
+            return DB::table('qa')->insertGetId(array('category_id' => $category, 'questioner_name' => $questionerName, 'questioner_email' => $questionerEmail, 'question' => $question));
  
             }
     }

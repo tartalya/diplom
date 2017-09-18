@@ -13,7 +13,6 @@ class User extends Model
     public static function Auth($login, $password)
         {
 
-        //$result = DB::select("SELECT * FROM users WHERE login='$login' AND password='$password'");
         return DB::table('users')->where('login', $login)->where('password', $password)->first();
         }
 
