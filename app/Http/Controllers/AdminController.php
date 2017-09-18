@@ -10,12 +10,16 @@ class AdminController extends Controller
 
     private static $baseContent;
     private static $lastQuestions;
+    private static $categories;
+    private static $statuses;
 
     public function __construct()
         {
 
         self::$baseContent = \App\Admin::GetBaseInfo();
         self::$lastQuestions = \App\Faq::LastQuestions();
+        self::$categories = \App\Categories::GetAll();
+        self::$statuses = \App\Faq::GetStatusList();
         }
 
     public function ShowAdminPanel()
@@ -97,4 +101,16 @@ class AdminController extends Controller
         }
         }
 
+        public function ShowAnswerPage()
+            {
+            
+            $questions = \App\Faq::GetAllNeedAnswer();
+            
+            
+            return view('admin.answer')->withContent(self::$baseContent)
+                    ->withQuestions($questions)
+                    ->withCategories(self::$categories)
+                    ->withStatuses(self::$statuses);
+            }
+        
     }

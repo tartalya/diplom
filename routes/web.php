@@ -23,3 +23,6 @@ Route::post('/admin/users', 'AdminController@EditUser');
 Route::get('/logout', 'UserController@Logout')->name('logout');
 Route::get('/ask', 'FaqController@ShowAskForm')->name('ask');
 Route::post('/ask', 'FaqController@Ask');
+
+Route::get('/admin/answer/add', 'AdminController@ShowAnswerPage')->name('answer');
+Route::post('/admin/answer/add', 'AdminController@SetAnswer');
