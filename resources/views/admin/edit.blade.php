@@ -63,9 +63,55 @@
     <br>
     <span style="font-size: 0.8rem">*Внимание, пароль не выводиться в форму так как он находиться в базе в зашифрованном виде !!!</span>
 
-    
+
 
 </div>
 
+<br><br>
+
+<h2>Добавление нового администратора</h2>
+
+<br>
+
+<div class="table-responsive">
+
+    <form name="user_add" method="POST">    
+
+        <table class="table table-striped">
+
+            <thead>
+                <tr>
+
+                    <th>Имя администратора</th>
+                    <th>Логин для входа</th>
+                    <th>Почтовый ящик нового администратора</th>
+                    <th>Пароль нового администратора</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+
+            <tr>
+                <td>
+                    <input type="text" name="name">
+                </td>
+                <td>
+                    <input type="text" name="login">
+                </td>
+                <td>
+                    <input type="text" name="email">
+                </td>
+                <td>
+                    <input type="password" name="password">
+                </td>
+                <td>
+                    <input type="submit" name="action" value="add">
+                </td>
+
+            </tr>
+
+        </table>
+    </form>
+
+</div>
 
 @endsection
