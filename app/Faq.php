@@ -12,7 +12,7 @@ class Faq extends Model
 
     public static function GetStatusList()
         {
-        
+
         return DB::table('status')->get();
         }
 
@@ -40,35 +40,40 @@ class Faq extends Model
 
     public static function NotAnsweredCount()
         {
-        
+
         return DB::table('qa')->whereNULL('answer')->count();
-        
         }
-    
-        
-        public static function LastQuestions($count = 10) 
-            {
-            
-            return DB::select("SELECT qa.*, categories.category_name FROM `qa` INNER JOIN categories on qa.category_id = categories.id ORDER by id DESC LIMIT $count");
-            
-            }
-        
-        public static function AddQuestion($questionerName, $questionerEmail, $question, $category)
-            {
-            
-            return DB::table('qa')->insertGetId(array('category_id' => $category, 'questioner_name' => $questionerName, 'questioner_email' => $questionerEmail, 'question' => $question));
- 
-            }
-            
-            public static function GetAllNeedAnswer()
-                {
-                
-                return DB::table('qa')
-                        ->join('categories', 'qa.category_id', '=', 'categories.id')
-                        ->join('status', 'qa.status_id', '=', 'status.id')
-                        ->select('qa.*', 'categories.category_name', 'status.status_name')
-                        ->where('qa.status_id', 1)
-                        ->get();
-                
-                }
+
+    public static function LastQuestions($count = 10)
+        {
+
+        return DB::select("SELECT qa.*, categories.category_name FROM `qa` INNER JOIN categories on qa.category_id = categories.id ORDER by id DESC LIMIT $count");
+        }
+
+    public static function AddQuestion($questionerName, $questionerEmail, $question, $category)
+        {
+
+        return DB::table('qa')->insertGetId(array('category_id' => $category, 'questioner_name' => $questionerName, 'questioner_email' => $questionerEmail, 'question' => $question));
+        }
+
+    public static function GetAll($status = '')
+        {
+
+        if ($status) {
+            return DB::table('qa')
+                            ->join('categories', 'qa.category_id', '=', 'categories.id')
+                            ->join('status', 'qa.status_id', '=', 'status.id')
+                            ->select('qa.*', 'categories.category_name', 'status.status_name')
+                            ->where('qa.status_id', $status)
+                            ->get();
+        } else {
+
+            return DB::table('qa')
+                            ->join('categories', 'qa.category_id', '=', 'categories.id')
+                            ->join('status', 'qa.status_id', '=', 'status.id')
+                            ->select('qa.*', 'categories.category_name', 'status.status_name')
+                            ->get();
+        }
+        }
+
     }

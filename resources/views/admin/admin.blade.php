@@ -50,11 +50,11 @@
                         </li>                       
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/answer/add">Отвечать</a>
+                            <a class="nav-link" href="/admin/answer/add">Список неотвеченных</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/answer/manage">Управление</a>
+                            <a class="nav-link" href="/admin/answer/manage">Список всех вопросов</a>
                         </li>
 
                         

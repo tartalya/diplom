@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h2>Список вопросов нуждающихся в ответе</h2>
+<h2>{{$description}}</h2>
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>

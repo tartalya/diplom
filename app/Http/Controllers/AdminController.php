@@ -104,13 +104,27 @@ class AdminController extends Controller
         public function ShowAnswerPage()
             {
             
-            $questions = \App\Faq::GetAllNeedAnswer();
+            $questions = \App\Faq::GetAll(1);
             
             
             return view('admin.answer')->withContent(self::$baseContent)
                     ->withQuestions($questions)
                     ->withCategories(self::$categories)
-                    ->withStatuses(self::$statuses);
+                    ->withStatuses(self::$statuses)
+                    ->withDescription('Список вопросов нуждающихся в ответе');
             }
         
+      public function ShowManagePage()
+            {
+            
+            $questions = \App\Faq::GetAll();
+            
+            
+            return view('admin.answer')->withContent(self::$baseContent)
+                    ->withQuestions($questions)
+                    ->withCategories(self::$categories)
+                    ->withStatuses(self::$statuses)
+                    ->withDescription('Список всех вопросов');
+            }
+            
     }
