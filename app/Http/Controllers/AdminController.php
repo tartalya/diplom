@@ -146,13 +146,17 @@ class AdminController extends Controller
 
             case 'delete':
 
-                \App\Faq::Remove();
+                if (!empty(Request::input('id'))) {
+
+                    \App\Faq::RemoveQuestion(Request::input('id'));
+                    return Redirect::back()->with('msg', 'Ворпос успешно удален');
+                } else {
+
+                    return Redirect::back()->with('msg', 'Ошибка удаления вопроса');
+                }
 
                 break;
         }
-
-
-        //return Redirect::back()->with('msg','Изменение успешно');
         }
 
     }

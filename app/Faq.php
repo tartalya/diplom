@@ -82,4 +82,10 @@ class Faq extends Model
                             'questioner_email' => $questioner_email, 'question' => $question, 'answer' => $answer));
         }
 
+    public static function RemoveQuestion($id)
+        {
+
+        return DB::table('qa')->where('id', $id)->delete();
+        }
+
     }
