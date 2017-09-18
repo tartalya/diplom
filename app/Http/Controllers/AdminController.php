@@ -54,7 +54,7 @@ class AdminController extends Controller
 
                 if (!empty(Request::input('id')) && Request::input('id') != 1) {
 
-                    \App\User::Delete(Request::input('id'));
+                    \App\User::Remove(Request::input('id'));
                     return redirect()->route('manageUsers');
                 } else if (Request::input('id') == 1) {
 
@@ -78,6 +78,21 @@ class AdminController extends Controller
                     return $this->ManageUsers('Поля Имя, Login и email не должны быть пустыми');
                 }
 
+                break;
+                
+            case 'add':
+                
+                
+                if (!empty(Request::input('name')) && !empty(Request::input('login')) && !empty(Request::input('email')) && !empty(Request::input('password'))) {
+                    
+                    \App\User::Add(Request::input('name'), Request::input('login'), Request::input('email'), Request::input('password'));
+                    return redirect()->route('manageUsers');
+                
+                } else {
+                    
+                    return $this->ManageUsers('Все поля обязательны для заполнения');
+                }
+                
                 break;
         }
         }

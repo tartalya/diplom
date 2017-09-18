@@ -43,10 +43,16 @@ class User extends Model
         }
         }
 
-    /* public static function Delete($id)
+    public static function Add($name, $login, $email, $password)
+        {
+
+        return DB::table('users')->insert(array('name' => $name, 'login' => $login, 'email' => $email, 'password' => md5($password)));
+        }
+
+    public static function Remove($id)
         {
 
         return DB::table('users')->where('id', $id)->delete();
         }
-*/
+
     }
