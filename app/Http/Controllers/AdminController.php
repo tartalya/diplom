@@ -46,12 +46,24 @@ class AdminController extends Controller
         {
 
 
-        var_dump($_POST);
+        //var_dump($_POST);
 
         switch (Request::input('action')) {
 
             case 'delete':
-                echo 'deleting';
+
+                if (!empty(Request::input('id')) && Request::input('id') != 1) {
+
+                    \App\User::Delete(Request::input('id'));
+                    return redirect()->route('manageUsers');
+                } else if (Request::input('id') == 1) {
+
+                    return $this->ManageUsers('Нельзя удалить супер администратора');
+                } else {
+
+                    return $this->ManageUsers('Ошибка удаления пользователя');
+                }
+
                 break;
 
             case 'edit':

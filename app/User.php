@@ -34,13 +34,19 @@ class User extends Model
 
         if (empty($newPassword)) {
 
-            $query = DB::table('users')->where('id', $id)
-                    ->update(array('name' => $newName, 'login' => $newLogin, 'email' => $newEmail));
+            return DB::table('users')->where('id', $id)
+                            ->update(array('name' => $newName, 'login' => $newLogin, 'email' => $newEmail));
         } else {
 
-            $query = DB::table('users')->where('id', $id)
-                    ->update(array('name' => $newName, 'login' => $newLogin, 'email' => $newEmail, 'password' => md5($newPassword)));
+            return DB::table('users')->where('id', $id)
+                            ->update(array('name' => $newName, 'login' => $newLogin, 'email' => $newEmail, 'password' => md5($newPassword)));
         }
         }
 
+    /* public static function Delete($id)
+        {
+
+        return DB::table('users')->where('id', $id)->delete();
+        }
+*/
     }
