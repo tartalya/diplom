@@ -30,6 +30,7 @@ class CategoriesController extends Controller
             case 'delete':
 
                 if (Request::input('category_id')) {
+                    \App\Faq::RemoveQuestionsByCategory(Request::input('category_id'));
                     \App\Categories::Remove(Request::input('category_id'));
                     return Redirect::back()->with('msg', 'Категория успешно удалена');
                 } else {

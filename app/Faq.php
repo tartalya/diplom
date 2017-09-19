@@ -82,6 +82,12 @@ class Faq extends Model
         return DB::table('qa')->where('id', $id)->delete();
         }
 
+    public static function RemoveQuestionsByCategory($category_id)
+        {
+
+        return DB::table('qa')->where('category_id', $category_id)->delete();
+        }
+
     public static function Count($category = '', $status = '')
         {
 

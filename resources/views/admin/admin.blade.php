@@ -62,6 +62,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/categories">Управление категориями</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/categories/qamanage">Управление Вопросами по категориями</a>
+                        </li>
                         <br>        
 
                     </ul>
