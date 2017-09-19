@@ -19,15 +19,7 @@ class Faq extends Model
     public static function GetAllApproved()
         {
 
-        $result = DB::select('SELECT qa.id, qa.question, qa.answer, qa.category_id, categories.category_name FROM `qa` INNER JOIN categories on qa.category_id = categories.id WHERE status_id=3 ORDER by categories.id');
-
-        return $result;
-        }
-
-    public static function GetCategoryList()
-        {
-
-        return DB::select('SELECT * FROM categories ORDER BY id');
+        return DB::select('SELECT qa.id, qa.question, qa.answer, qa.category_id, categories.category_name FROM `qa` INNER JOIN categories on qa.category_id = categories.id WHERE status_id=3 ORDER by categories.id');
         }
 
     public static function NotAnsweredCount()
