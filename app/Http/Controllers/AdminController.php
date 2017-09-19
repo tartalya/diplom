@@ -30,19 +30,19 @@ class AdminController extends Controller
     public function ShowAdminPanel()
         {
 
-        if (self::$baseContent && self::$lastQuestions) {
+        if ($_SESSION) {
+
             return view('admin.main')->withContent(self::$baseContent)->withlastQuestions(self::$lastQuestions);
         } else {
 
             return redirect()->route('login');
-            ;
         }
         }
 
-    public function ManageUsers($msg = '')
+    public function ManageUsers()
         {
 
-        return view('admin.edit')->withContent(self::$baseContent)->withUsers(self::$users)->withMsg($msg);
+        return view('admin.edit')->withContent(self::$baseContent)->withUsers(self::$users);
         }
 
     public function EditUser()
@@ -55,13 +55,13 @@ class AdminController extends Controller
                 if (!empty(Request::input('id')) && Request::input('id') != 1) {
 
                     \App\User::Remove(Request::input('id'));
-                    return redirect()->route('manageUsers');
+                    return Redirect::back()->with('msg', 'Пользователь удален');
                 } else if (Request::input('id') == 1) {
 
-                    return $this->ManageUsers('Нельзя удалить супер администратора');
+                    return Redirect::back()->with('msg', 'Нельзя удалить супер администратора');
                 } else {
 
-                    return $this->ManageUsers('Ошибка удаления пользователя');
+                    return Redirect::back()->with('msg', 'Ошибка удаления пользователя');
                 }
 
                 break;
@@ -72,10 +72,12 @@ class AdminController extends Controller
 
                     \App\User::Edit(Request::input('id'), Request::input('name'), Request::input('login'), Request::input('email'), Request::input('password'));
 
-                    return redirect()->route('manageUsers');
+
+                    return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
                 } else {
 
-                    return $this->ManageUsers('Поля Имя, Login и email не должны быть пустыми');
+
+                    return Redirect::back()->with('msg', 'Поля Имя, Login и email не должны быть пустыми');
                 }
 
                 break;
@@ -86,10 +88,12 @@ class AdminController extends Controller
                 if (!empty(Request::input('name')) && !empty(Request::input('login')) && !empty(Request::input('email')) && !empty(Request::input('password'))) {
 
                     \App\User::Add(Request::input('name'), Request::input('login'), Request::input('email'), Request::input('password'));
-                    return redirect()->route('manageUsers');
+
+                    return Redirect::back()->with('msg', 'Пользователь успешно добавлен');
                 } else {
 
-                    return $this->ManageUsers('Все поля обязательны для заполнения');
+
+                    return Redirect::back()->with('msg', 'Все поля обязательны для заполнения');
                 }
 
                 break;

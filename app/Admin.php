@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Model
     {
 
-
     public static function GetBaseInfo()
         {
 
@@ -25,5 +24,5 @@ class Admin extends Model
             return $content;
         }
         }
-    
+
     }
