@@ -30,10 +30,9 @@ Route::post('/admin/answer/add', 'AdminController@ManageAnswer');
 Route::get('/admin/answer/manage', 'AdminController@ShowManagePage')->name('manage');
 Route::post('/admin/answer/manage', 'AdminController@ManageAnswer');
 
+Route::get('/admin/answer/category', 'AdminController@ShowAnswerByCategory');
+Route::post('/admin/answer/category', 'AdminController@ShowAnswerByCategory');
+
 Route::get('/admin/categories', 'AdminController@ShowCategoriesPage')->name('categories');
 Route::post('/admin/categories', 'CategoriesController@ManageCategories');
-
-
-Route::get('/admin/categories/qamanage', 'AdminController@ShowCategoriesPage')->name('qamanage');
-Route::post('/admin/categories/qamanage', 'CategoriesController@ManageCategories');
 

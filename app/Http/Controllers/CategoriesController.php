@@ -51,4 +51,16 @@ class CategoriesController extends Controller
         }
         }
 
+    public static function GetNameById($id)
+        {
+
+        if (!empty($id)) {
+
+            return \App\Categories::GetNameByID($id);
+        } else {
+
+            return '';
+        }
+        }
+
     }

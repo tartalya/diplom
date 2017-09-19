@@ -51,7 +51,7 @@ class Faq extends Model
     public static function GetAll($status = '')
         {
 
-        if ($status) {
+        if (!empty($status)) {
             return DB::table('qa')
                             ->join('categories', 'qa.category_id', '=', 'categories.id')
                             ->join('status', 'qa.status_id', '=', 'status.id')

@@ -37,4 +37,20 @@ class Categories extends Model
         return DB::table('categories')->where('id', $id)->update(array('category_name' => $category_name));
         }
 
+    public static function GetFirstId()
+        {
+
+        $query = DB::table('categories')->first();
+
+        return $query->id;
+        }
+
+    public static function GetNameByID($id)
+        {
+
+        $query = DB::table('categories')->select('category_name')->where('id', $id)->first();
+
+        return $query->category_name;
+        }
+
     }

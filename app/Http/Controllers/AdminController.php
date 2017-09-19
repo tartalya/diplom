@@ -13,6 +13,8 @@ class AdminController extends Controller
     private static $lastQuestions;
     private static $categories;
     private static $statuses;
+    private static $questions;
+    private static $users;
 
     public function __construct()
         {
@@ -21,6 +23,8 @@ class AdminController extends Controller
         self::$lastQuestions = \App\Faq::LastQuestions();
         self::$categories = \App\Categories::GetAll();
         self::$statuses = \App\Faq::GetStatusList();
+        self::$questions = \App\Faq::GetAll();
+        self::$users = \App\User::GetAll();
         }
 
     public function ShowAdminPanel()
@@ -38,13 +42,7 @@ class AdminController extends Controller
     public function ManageUsers($msg = '')
         {
 
-        if (self::$baseContent) {
-
-
-            $users = \App\User::GetAll();
-
-            return view('admin.edit')->withContent(self::$baseContent)->withUsers($users)->withMsg($msg);
-        }
+        return view('admin.edit')->withContent(self::$baseContent)->withUsers(self::$users)->withMsg($msg);
         }
 
     public function EditUser()
@@ -115,11 +113,8 @@ class AdminController extends Controller
     public function ShowManagePage($msg = '')
         {
 
-        $questions = \App\Faq::GetAll();
-
-
         return view('admin.answer')->withContent(self::$baseContent)
-                        ->withQuestions($questions)
+                        ->withQuestions(self::$questions)
                         ->withCategories(self::$categories)
                         ->withStatuses(self::$statuses)
                         ->withDescription('Список всех вопросов')
@@ -172,5 +167,24 @@ class AdminController extends Controller
         return \App\Faq::Count($category, $status);
         }
 
-    
+    public static function ShowAnswerByCategory()
+        {
+
+        if (Request::has('category_id') && !empty(Request::input('category_id'))) {
+
+
+            $category_id = Request::input('category_id');
+        } else {
+
+            $category_id = \App\Categories::GetFirstId();
+        }
+
+        return view('admin.list')->withContent(self::$baseContent)
+                        ->withQuestions(self::$questions)
+                        ->withCategories(self::$categories)
+                        ->withStatuses(self::$statuses)
+                        ->withSelectedId($category_id)
+                        ->withDescription('Список вопросов в категории');
+        }
+
     }
