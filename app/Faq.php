@@ -30,12 +30,6 @@ class Faq extends Model
         return DB::select('SELECT * FROM categories ORDER BY id');
         }
 
-    public static function Count()
-        {
-
-        return DB::table('qa')->count();
-        }
-
     public static function NotAnsweredCount()
         {
 
@@ -86,6 +80,26 @@ class Faq extends Model
         {
 
         return DB::table('qa')->where('id', $id)->delete();
+        }
+
+    public static function Count($category = '', $status = '')
+        {
+
+        if (!empty($category) && !empty($status)) {
+
+            $query = DB::table('qa')->where('category_id', $category)->where('status_id', $status)->count();
+        } else if (!empty($category)) {
+
+            $query = DB::table('qa')->where('category_id', $category)->count();
+        } else if (!empty($status)) {
+
+            $query = DB::table('qa')->where('status_id', $status)->count();
+        } else {
+
+            $query = DB::table('qa')->count();
+        }
+
+        return $query;
         }
 
     }

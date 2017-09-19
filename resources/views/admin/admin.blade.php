@@ -57,7 +57,7 @@
                             <a class="nav-link" href="/admin/answer/manage">Список всех вопросов</a>
                         </li>
 
-                        
+                                            
                         <br>
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/categories">Управление категориями</a>

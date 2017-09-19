@@ -159,4 +159,19 @@ class AdminController extends Controller
         }
         }
 
+    public function ShowCategoriesPage($msg = '')
+        {
+
+        return view('admin.categories')->withContent(self::$baseContent)
+                        ->withCategories(self::$categories)
+                        ->withDescription('Управление категориями')
+                        ->withMsg($msg);
+        }
+
+    public static function GetCount($category = '', $status = '')
+        {
+
+        return \App\Faq::Count($category, $status);
+        }
+
     }
