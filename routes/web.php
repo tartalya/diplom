@@ -31,4 +31,4 @@ Route::get('/admin/answer/manage', 'AdminController@ShowManagePage')->name('mana
 Route::post('/admin/answer/manage', 'AdminController@ManageAnswer');
 
 Route::get('/admin/categories', 'AdminController@ShowCategoriesPage')->name('categories');
-Route::post('/admin/categories', 'AdminController@ShowCategoriesPage');
+Route::post('/admin/categories', 'CategoriesController@ManageCategories');

@@ -172,4 +172,5 @@ class AdminController extends Controller
         return \App\Faq::Count($category, $status);
         }
 
+    
     }

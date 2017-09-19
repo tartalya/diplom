@@ -19,4 +19,22 @@ class Categories extends Model
         return DB::table('categories')->get();
         }
 
+    public static function Add($category_name)
+        {
+
+        return DB::table('categories')->insert(array('category_name' => $category_name));
+        }
+
+    public static function Remove($id)
+        {
+
+        return DB::table('categories')->where('id', $id)->delete();
+        }
+
+    public static function Edit($id, $category_name)
+        {
+
+        return DB::table('categories')->where('id', $id)->update(array('category_name' => $category_name));
+        }
+
     }

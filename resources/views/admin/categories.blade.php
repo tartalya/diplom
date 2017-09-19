@@ -54,6 +54,7 @@ setTimeout(function () {
             <td>{{\App\Http\Controllers\AdminController::GetCount($category->id, 3)}}</td>
             <td>{{\App\Http\Controllers\AdminController::GetCount($category->id, 1)}}</td>
  
+            <td><input type="hidden" name="category_id" value="{{$category->id}}"></td>
             <td><input type="submit" name="action" value="edit"></td>
             <td><input type="submit" name="action" value="delete"></td>
             

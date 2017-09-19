@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'faq_diplom'),
+    'name' => env('APP_NAME', 'frequently asked questions'),
 
     /*
     |--------------------------------------------------------------------------
