@@ -129,8 +129,6 @@ class AdminController extends Controller
     public function ManageAnswer()
         {
 
-        //var_dump($_POST);
-
         switch (Request::input('action')) {
 
             case 'edit':
