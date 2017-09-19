@@ -28,7 +28,6 @@ class UserController extends Controller
                 $_SESSION['email'] = $result->email;
 
                 return redirect()->route('admin');
-                ;
             } else {
 
                 return view('auth.login')->withMsg('Ошибка авторизации');
