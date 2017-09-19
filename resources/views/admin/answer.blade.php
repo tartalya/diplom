@@ -6,20 +6,11 @@
 <div class="table-responsive">
 
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-    <script>
-
-$("#message").show();
-setTimeout(function () {
-    $("#message").hide();
-}, 3000);
-
-    </script>
 
 
     <Center><h1><font color="red"><div class="message" id="message">
-                
+
                 {{Session::get('msg')}}
             </div></font></h1></Center>
 

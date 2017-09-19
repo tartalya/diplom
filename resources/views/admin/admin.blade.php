@@ -16,6 +16,18 @@
     </head>
 
     <body>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <script>
+
+$("#message").show();
+setTimeout(function () {
+    $("#message").hide();
+}, 3000);
+
+    </script>
+
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="/admin">Панель администратора</a> 
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +56,7 @@
                             <a class="nav-link" href="/admin/users">Администраторы</a>
                         </li>
                         <br>
-                        
+
                         <li class="nav-item">
                         <center><b>Управление вопросами и ответами</b></center>
                         </li>                       
@@ -57,14 +69,14 @@
                             <a class="nav-link" href="/admin/answer/manage">Список всех вопросов</a>
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link" href="/admin/answer/category/">Список вопросов по категориям</a>
+                            <a class="nav-link" href="/admin/answer/category/">Список вопросов по категориям</a>
                         </li>
-                                            
+
                         <br>
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/categories">Управление категориями</a>
                         </li>
-                        
+
                         <br>        
 
                     </ul>
@@ -75,7 +87,7 @@
                 </nav>
 
                 <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-                   
+
 
                     <h1>Общая информация по системе</h1>
 
@@ -106,18 +118,13 @@
 
 
                     </section>
-                    
+
                     @yield('content')
 
                 </main>
             </div>
         </div>
-        
-        @if (isset($msg))
-        <br><br>
-    <center><font color="red">{{$msg}}</font></center>
 
-    @endif
 
         <!-- Bootstrap core JavaScript
         ================================================== -->

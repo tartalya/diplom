@@ -7,20 +7,11 @@
 <div class="table-responsive">
 
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-    <script>
-
-$("#message").show();
-setTimeout(function () {
-    $("#message").hide();
-}, 3000);
-
-    </script>
 
 
     <Center><h1><font color="red"><div class="message" id="message">
-                
+
                 {{Session::get('msg')}}
             </div></font></h1></Center>
 
@@ -38,34 +29,34 @@ setTimeout(function () {
         <tbody>
 
         <form name="category" method="POST"> 
-            
-        @foreach ($categories as $category)
-        <tr>
-            
-            <td>{{$category->id}}</td>
-            <td>
-                
-            
-                <input name="category_name" type="text" value="{{$category->category_name}}">
-            
-            
-            </td>
-            <td>{{\App\Http\Controllers\AdminController::GetCount($category->id)}}</td>
-            <td>{{\App\Http\Controllers\AdminController::GetCount($category->id, 3)}}</td>
-            <td>{{\App\Http\Controllers\AdminController::GetCount($category->id, 1)}}</td>
- 
-            <td><input type="hidden" name="category_id" value="{{$category->id}}"></td>
-            <td><input type="submit" name="action" value="edit"></td>
-            <td><input type="submit" name="action" value="delete"></td>
-            
-        </tr>
- 
-        @endforeach
- 
-        
+
+            @foreach ($categories as $category)
+            <tr>
+
+                <td>{{$category->id}}</td>
+                <td>
+
+
+                    <input name="category_name" type="text" value="{{$category->category_name}}">
+
+
+                </td>
+                <td>{{\App\Http\Controllers\AdminController::GetCount($category->id)}}</td>
+                <td>{{\App\Http\Controllers\AdminController::GetCount($category->id, 3)}}</td>
+                <td>{{\App\Http\Controllers\AdminController::GetCount($category->id, 1)}}</td>
+
+                <td><input type="hidden" name="category_id" value="{{$category->id}}"></td>
+                <td><input type="submit" name="action" value="edit"></td>
+                <td><input type="submit" name="action" value="delete"></td>
+
+            </tr>
+
+            @endforeach
+
+
         </form>
 
-</tbody>
+        </tbody>
     </table>
 
 </div>
@@ -88,7 +79,7 @@ setTimeout(function () {
                 <tr>
 
                     <th>Название категории</th>
-                    
+
                 </tr>
             </thead>
 
@@ -96,7 +87,7 @@ setTimeout(function () {
                 <td>
                     <input type="text" name="category_name">
                 </td>
-                
+
                 <td>
                     <input type="submit" name="action" value="add">
                 </td>
