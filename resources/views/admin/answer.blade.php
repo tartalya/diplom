@@ -19,7 +19,7 @@ setTimeout(function () {
 
 
     <Center><h1><font color="red"><div class="message" id="message">
-                {{$msg}}
+                
                 {{Session::get('msg')}}
             </div></font></h1></Center>
 

@@ -100,7 +100,7 @@ class AdminController extends Controller
         }
         }
 
-    public function ShowAnswerPage($msg = '')
+    public function ShowAnswerPage()
         {
 
         $questions = \App\Faq::GetAll(1);
@@ -110,19 +110,17 @@ class AdminController extends Controller
                         ->withQuestions($questions)
                         ->withCategories(self::$categories)
                         ->withStatuses(self::$statuses)
-                        ->withDescription('Список вопросов нуждающихся в ответе')
-                        ->withMsg($msg);
+                        ->withDescription('Список вопросов нуждающихся в ответе');
         }
 
-    public function ShowManagePage($msg = '')
+    public function ShowManagePage()
         {
 
         return view('admin.answer')->withContent(self::$baseContent)
                         ->withQuestions(self::$questions)
                         ->withCategories(self::$categories)
                         ->withStatuses(self::$statuses)
-                        ->withDescription('Список всех вопросов')
-                        ->withMsg($msg);
+                        ->withDescription('Список всех вопросов');
         }
 
     public function ManageAnswer()
