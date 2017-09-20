@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use App\Faq;
+use App\User;
+use App\Categories;
 
 class Admin extends Model
     {
@@ -16,10 +19,10 @@ class Admin extends Model
         if ($_SESSION) {
 
             $content['admin_name'] = $_SESSION['name'];
-            $content['admin_count'] = \App\User::Count();
-            $content['qa_count'] = \App\Faq::Count();
-            $content['categories_count'] = \App\Categories::Count();
-            $content['not_answered_count'] = \App\Faq::NotAnsweredCount();
+            $content['admin_count'] = User::select()->count();
+            $content['qa_count'] = Faq::Count();
+            $content['categories_count'] = Categories::select()->count();
+            $content['not_answered_count'] = Faq::NotAnsweredCount();
 
             return $content;
         }

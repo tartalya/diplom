@@ -12,7 +12,7 @@ class FaqController extends Controller
         {
 
         $faq = \App\Faq::GetAllApproved();
-        $categories = \App\Categories::GetAll();
+        $categories = \App\Categories::all();
 
         return view('index')->withOutput($faq)->withCatlist($categories);
         }
@@ -20,7 +20,7 @@ class FaqController extends Controller
     public function Ask()
         {
 
-        $categories = \App\Categories::GetAll();
+        $categories = \App\Categories::all();
 
         if (!empty(Request::input('name')) && !empty(Request::input('email')) && !empty(Request::input('question')) && !empty(Request::input('category'))) {
 
@@ -42,7 +42,7 @@ class FaqController extends Controller
     public function ShowAskForm()
         {
 
-        $categories = \App\Categories::GetAll();
+        $categories = \App\Categories::all();
 
         return view('ask')->withCategories($categories);
         }

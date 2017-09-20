@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
 use Request;
+use App\User;
 
 class UserController extends Controller
     {
@@ -18,7 +18,7 @@ class UserController extends Controller
 
         if (!empty(Request::input('login')) && !empty(Request::input('password'))) {
 
-            $result = \App\User::Auth(Request::input('login'), md5(Request::input('password')));
+            $result = User::where('login', Request::input('login'))->where('password', md5(Request::input('password')))->first();
 
             if ($result) {
 

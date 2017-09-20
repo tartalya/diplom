@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 //use Illuminate\Http\Request;
 use Request;
 use Redirect;
+use App\Faq;
+use App\Admin;
+use App\Categories;
+use App\User;
 
 class AdminController extends Controller
     {
@@ -19,12 +23,12 @@ class AdminController extends Controller
     public function __construct()
         {
 
-        self::$baseContent = \App\Admin::GetBaseInfo();
-        self::$lastQuestions = \App\Faq::LastQuestions();
-        self::$categories = \App\Categories::GetAll();
-        self::$statuses = \App\Faq::GetStatusList();
-        self::$questions = \App\Faq::GetAll();
-        self::$users = \App\User::GetAll();
+        self::$baseContent = Admin::GetBaseInfo();
+        self::$lastQuestions = Faq::LastQuestions();
+        self::$categories = Categories::all();
+        self::$statuses = Faq::GetStatusList();
+        self::$questions = Faq::GetAll();
+        self::$users = User::All();
         }
 
     public function ShowAdminPanel()
@@ -54,7 +58,7 @@ class AdminController extends Controller
 
                 if (!empty(Request::input('id')) && Request::input('id') != 1) {
 
-                    \App\User::Remove(Request::input('id'));
+                    User::destroy(Request::input('id'));
                     return Redirect::back()->with('msg', 'Пользователь удален');
                 } else if (Request::input('id') == 1) {
 
@@ -70,7 +74,7 @@ class AdminController extends Controller
 
                 if (!empty(Request::input('id')) && !empty(Request::input('name')) && !empty(Request::input('login')) && !empty(Request::input('email'))) {
 
-                    \App\User::Edit(Request::input('id'), Request::input('name'), Request::input('login'), Request::input('email'), Request::input('password'));
+                    User::Edit(Request::input('id'), Request::input('name'), Request::input('login'), Request::input('email'), Request::input('password'));
 
 
                     return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
@@ -87,11 +91,11 @@ class AdminController extends Controller
 
                 if (!empty(Request::input('name')) && !empty(Request::input('login')) && !empty(Request::input('email')) && !empty(Request::input('password'))) {
 
-                    \App\User::Add(Request::input('name'), Request::input('login'), Request::input('email'), Request::input('password'));
+
+                    User::firstOrCreate(array('name' => Request::input('name'), 'login' => Request::input('login'), 'email' => Request::input('email'), 'password' => md5(Request::input('password'))));
 
                     return Redirect::back()->with('msg', 'Пользователь успешно добавлен');
                 } else {
-
 
                     return Redirect::back()->with('msg', 'Все поля обязательны для заполнения');
                 }
@@ -103,7 +107,7 @@ class AdminController extends Controller
     public function ShowAnswerPage()
         {
 
-        $questions = \App\Faq::GetAll(1);
+        $questions = Faq::GetAll(1);
 
 
         return view('admin.answer')->withContent(self::$baseContent)
@@ -131,7 +135,7 @@ class AdminController extends Controller
             case 'edit':
 
                 if (!empty(Request::input('category')) && !empty(Request::input('status')) && !empty(Request::input('questioner_name')) && !empty(Request::input('questioner_email')) && !empty(Request::input('question')) && !empty(Request::input('answer')) && !empty(Request::input('id'))) {
-                    \App\Faq::UpdateQuestion(Request::input('id'), Request::input('category'), Request::input('status'), Request::input('questioner_name'), Request::input('questioner_email'), Request::input('question'), Request::input('answer'));
+                    Faq::UpdateQuestion(Request::input('id'), Request::input('category'), Request::input('status'), Request::input('questioner_name'), Request::input('questioner_email'), Request::input('question'), Request::input('answer'));
                     return Redirect::back()->with('msg', 'Вопрос успешно обновлен');
                 } else {
 
@@ -143,7 +147,7 @@ class AdminController extends Controller
 
                 if (!empty(Request::input('id'))) {
 
-                    \App\Faq::RemoveQuestion(Request::input('id'));
+                    Faq::RemoveQuestion(Request::input('id'));
                     return Redirect::back()->with('msg', 'Ворпос успешно удален');
                 } else {
 
@@ -154,19 +158,18 @@ class AdminController extends Controller
         }
         }
 
-    public function ShowCategoriesPage($msg = '')
+    public function ShowCategoriesPage()
         {
 
         return view('admin.categories')->withContent(self::$baseContent)
                         ->withCategories(self::$categories)
-                        ->withDescription('Управление категориями')
-                        ->withMsg($msg);
+                        ->withDescription('Управление категориями');
         }
 
     public static function GetCount($category = '', $status = '')
         {
 
-        return \App\Faq::Count($category, $status);
+        return Faq::Count($category, $status);
         }
 
     public static function ShowAnswerByCategory()
@@ -178,7 +181,7 @@ class AdminController extends Controller
             $category_id = Request::input('category_id');
         } else {
 
-            $category_id = \App\Categories::GetFirstId();
+            $category_id = Categories::select()->first()->id;
         }
 
         return view('admin.list')->withContent(self::$baseContent)
