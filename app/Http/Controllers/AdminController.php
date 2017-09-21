@@ -123,7 +123,7 @@ class AdminController extends Controller
     public function showAnswerPage()
     {
 
-        $questions = Faq::GetAll(1);
+        $questions = Faq::GetAllCombined(1);
 
         /*
           $questions = Faq::join('categories', 'faqs.category_id', '=', 'categories.id')
