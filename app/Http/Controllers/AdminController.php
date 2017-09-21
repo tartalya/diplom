@@ -13,21 +13,17 @@ class AdminController extends Controller
     {
 
     private static $baseContent;
-    private static $lastQuestions;
     private static $categories;
     private static $statuses;
     private static $questions;
-    private static $users;
 
     public function __construct()
         {
 
         self::$baseContent = Self::getBaseInfo();
-        self::$lastQuestions = Faq::LastQuestions();
         self::$categories = Categories::all();
         self::$statuses = Status::all();
         self::$questions = Faq::getAll();
-        self::$users = User::all();
         }
 
     public static function getBaseInfo()
@@ -56,10 +52,13 @@ class AdminController extends Controller
         {
 
         if ($_SESSION) {
+            
+            $lastQuestion = Faq::join('categories', 'faqs.category_id', '=', 'categories.id')
+                ->select('faqs.*', 'categories.category_name')
+                    ->orderBy('id', 'DESC')->take(15)
+                ->get();
 
-
-
-            return view('admin.main')->withContent(self::$baseContent)->withlastQuestions(self::$lastQuestions);
+            return view('admin.main')->withContent(self::$baseContent)->withlastQuestions($lastQuestion);
         } else {
 
             return redirect()->route('login');
@@ -69,7 +68,7 @@ class AdminController extends Controller
     public function manageUsers()
         {
 
-        return view('admin.edit')->withContent(self::$baseContent)->withUsers(self::$users);
+        return view('admin.edit')->withContent(self::$baseContent)->withUsers(User::all());
         }
 
     public function editUser()
@@ -131,7 +130,14 @@ class AdminController extends Controller
         {
 
         $questions = Faq::GetAll(1);
-
+        
+        /*
+        $questions = Faq::join('categories', 'faqs.category_id', '=', 'categories.id')
+                ->join('statuses', 'faqs.status_id', '=', 'statuses.id')
+                ->select('faqs.*', 'categories.category_name', 'statuses.status_name')
+                ->where('faqs.status_id', 1)
+                ->get();
+*/
 
         return view('admin.answer')->withContent(self::$baseContent)
                         ->withQuestions($questions)

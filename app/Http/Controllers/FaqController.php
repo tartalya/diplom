@@ -18,9 +18,7 @@ class FaqController extends Controller
                 ->select('faqs.*', 'categories.category_name')
                 ->get();
 
-        $categories = Categories::all();
-
-        return view('index')->withOutput($approvedFaqs)->withCatlist($categories);
+        return view('index')->withOutput($approvedFaqs)->withCatlist(Categories::all());
         }
 
     public function ask()

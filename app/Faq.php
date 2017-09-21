@@ -10,12 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class Faq extends Model
     {
 
-    public static function lastQuestions($count = 10)
-        {
-
-        return DB::select("SELECT faqs.*, categories.category_name FROM `faqs` INNER JOIN categories on faqs.category_id = categories.id ORDER by id DESC LIMIT $count");
-        }
-
     public static function addQuestion($questionerName, $questionerEmail, $question, $category)
         {
 
