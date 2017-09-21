@@ -6,9 +6,9 @@ namespace App\Http\Controllers;
 use Request;
 use Redirect;
 use App\Faq;
-use App\Admin;
 use App\Categories;
 use App\User;
+use App\Status;
 
 class AdminController extends Controller
     {
@@ -23,7 +23,7 @@ class AdminController extends Controller
     public function __construct()
         {
 
-        self::$baseContent = Admin::GetBaseInfo();
+        self::$baseContent = Self::getBaseInfo();
         self::$lastQuestions = Faq::LastQuestions();
         self::$categories = Categories::all();
         self::$statuses = Faq::GetStatusList();
@@ -31,7 +31,25 @@ class AdminController extends Controller
         self::$users = User::All();
         }
 
-    public function ShowAdminPanel()
+    public static function getBaseInfo()
+        {
+
+        session_start();
+
+        if ($_SESSION) {
+
+            $content['admin_name'] = $_SESSION['name'];
+            $content['admin_count'] = User::select()->count();
+            $content['qa_count'] = Faq::Count();
+            $content['categories_count'] = Categories::select()->count();
+            //$content['not_answered_count'] = Faq::NotAnsweredCount();
+            $content['not_answered_count'] = Status::where('id', 1)->count();
+
+            return $content;
+        }
+        }
+
+    public function showAdminPanel()
         {
 
         if ($_SESSION) {
@@ -43,13 +61,13 @@ class AdminController extends Controller
         }
         }
 
-    public function ManageUsers()
+    public function manageUsers()
         {
 
         return view('admin.edit')->withContent(self::$baseContent)->withUsers(self::$users);
         }
 
-    public function EditUser()
+    public function editUser()
         {
 
         switch (Request::input('action')) {
@@ -104,7 +122,7 @@ class AdminController extends Controller
         }
         }
 
-    public function ShowAnswerPage()
+    public function showAnswerPage()
         {
 
         $questions = Faq::GetAll(1);
@@ -117,7 +135,7 @@ class AdminController extends Controller
                         ->withDescription('Список вопросов нуждающихся в ответе');
         }
 
-    public function ShowManagePage()
+    public function showManagePage()
         {
 
         return view('admin.answer')->withContent(self::$baseContent)
@@ -127,7 +145,7 @@ class AdminController extends Controller
                         ->withDescription('Список всех вопросов');
         }
 
-    public function ManageAnswer()
+    public function manageAnswer()
         {
 
         switch (Request::input('action')) {
@@ -158,7 +176,7 @@ class AdminController extends Controller
         }
         }
 
-    public function ShowCategoriesPage()
+    public function showCategoriesPage()
         {
 
         return view('admin.categories')->withContent(self::$baseContent)
@@ -172,7 +190,7 @@ class AdminController extends Controller
         return Faq::Count($category, $status);
         }
 
-    public static function ShowAnswerByCategory()
+    public static function showAnswerByCategory()
         {
 
         if (Request::has('category_id') && !empty(Request::input('category_id'))) {

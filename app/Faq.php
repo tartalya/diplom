@@ -13,7 +13,7 @@ class Faq extends Model
     public static function GetStatusList()
         {
 
-        return DB::table('status')->get();
+        return DB::table('statuses')->get();
         }
 
     public static function GetAllApproved()
@@ -46,16 +46,16 @@ class Faq extends Model
         if (!empty($status)) {
             return DB::table('qa')
                             ->join('categories', 'qa.category_id', '=', 'categories.id')
-                            ->join('status', 'qa.status_id', '=', 'status.id')
-                            ->select('qa.*', 'categories.category_name', 'status.status_name')
+                            ->join('statuses', 'qa.status_id', '=', 'statuses.id')
+                            ->select('qa.*', 'categories.category_name', 'statuses.status_name')
                             ->where('qa.status_id', $status)
                             ->get();
         } else {
 
             return DB::table('qa')
                             ->join('categories', 'qa.category_id', '=', 'categories.id')
-                            ->join('status', 'qa.status_id', '=', 'status.id')
-                            ->select('qa.*', 'categories.category_name', 'status.status_name')
+                            ->join('statuses', 'qa.status_id', '=', 'statuses.id')
+                            ->select('qa.*', 'categories.category_name', 'statuses.status_name')
                             ->get();
         }
         }

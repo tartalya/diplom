@@ -6,11 +6,13 @@ namespace App\Http\Controllers;
 
 use Request;
 use Redirect;
+use App\Categories;
+use App\Faq;
 
 class CategoriesController extends Controller
     {
 
-    public function ManageCategories()
+    public function manageCategories()
         {
 
         switch (Request::input('action')) {
@@ -18,7 +20,7 @@ class CategoriesController extends Controller
             case 'add':
 
                 if (Request::input('category_name')) {
-                    \App\Categories::Add(Request::input('category_name'));
+                    Categories::firstOrCreate(array('category_name' => Request::input('category_name')));
                     return Redirect::back()->with('msg', 'Категория успешно добавлена');
                 } else {
                     return Redirect::back()->with('msg', 'Ошибка добавления категории');
@@ -30,8 +32,8 @@ class CategoriesController extends Controller
             case 'delete':
 
                 if (Request::input('category_id')) {
-                    \App\Faq::RemoveQuestionsByCategory(Request::input('category_id'));
-                    \App\Categories::destroy(Request::input('category_id'));
+                    Faq::RemoveQuestionsByCategory(Request::input('category_id'));
+                    Categories::destroy(Request::input('category_id'));
                     return Redirect::back()->with('msg', 'Категория успешно удалена');
                 } else {
 
@@ -43,7 +45,7 @@ class CategoriesController extends Controller
             case 'edit':
 
                 if (Request::input('category_id') && Request::input('category_name')) {
-                    \App\Categories::Edit(Request::input('category_id'), Request::input('category_name'));
+                    Categories::where('id', Request::input('category_id'))->update(array('category_name' => Request::input('category_name')));
                     return Redirect::back()->with('msg', 'Категория успешно изменена');
                 } else {
                     return Redirect::back()->with('msg', 'Ошибка переименования категории');
@@ -51,12 +53,12 @@ class CategoriesController extends Controller
         }
         }
 
-    public static function GetNameById($id)
+    public static function getNameById($id)
         {
 
         if (!empty($id)) {
 
-            return \App\Categories::GetNameByID($id);
+            return Categories::where('id', $id)->first()->category_name;
         } else {
 
             return '';

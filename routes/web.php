@@ -11,28 +11,28 @@
   |
  */
 
-Route::get('/', 'FaqController@ShowIndex')->name('index');
+Route::get('/', 'FaqController@showIndex')->name('index');
 
-Route::get('/login', 'UserController@ShowLoginForm')->name('login');
+Route::get('/login', 'UserController@showLoginForm')->name('login');
 
-Route::post('/login', 'UserController@Auth');
+Route::post('/login', 'UserController@auth');
 
-Route::get('/admin', 'AdminController@ShowAdminPanel')->name('admin');
-Route::get('/admin/users', 'AdminController@ManageUsers')->name('manageUsers');
-Route::post('/admin/users', 'AdminController@EditUser');
-Route::get('/logout', 'UserController@Logout')->name('logout');
-Route::get('/ask', 'FaqController@ShowAskForm')->name('ask');
-Route::post('/ask', 'FaqController@Ask');
+Route::get('/admin', 'AdminController@showAdminPanel')->name('admin');
+Route::get('/admin/users', 'AdminController@manageUsers')->name('manageUsers');
+Route::post('/admin/users', 'AdminController@editUser');
+Route::get('/logout', 'UserController@logout')->name('logout');
+Route::get('/ask', 'FaqController@showAskForm')->name('ask');
+Route::post('/ask', 'FaqController@ask');
 
-Route::get('/admin/answer/add', 'AdminController@ShowAnswerPage')->name('answer');
-Route::post('/admin/answer/add', 'AdminController@ManageAnswer');
+Route::get('/admin/answer/add', 'AdminController@showAnswerPage')->name('answer');
+Route::post('/admin/answer/add', 'AdminController@manageAnswer');
 
-Route::get('/admin/answer/manage', 'AdminController@ShowManagePage')->name('manage');
-Route::post('/admin/answer/manage', 'AdminController@ManageAnswer');
+Route::get('/admin/answer/manage', 'AdminController@showManagePage')->name('manage');
+Route::post('/admin/answer/manage', 'AdminController@manageAnswer');
 
-Route::get('/admin/answer/category', 'AdminController@ShowAnswerByCategory');
-Route::post('/admin/answer/category', 'AdminController@ShowAnswerByCategory');
+Route::get('/admin/answer/category', 'AdminController@showAnswerByCategory');
+Route::post('/admin/answer/category', 'AdminController@showAnswerByCategory');
 
-Route::get('/admin/categories', 'AdminController@ShowCategoriesPage')->name('categories');
-Route::post('/admin/categories', 'CategoriesController@ManageCategories');
+Route::get('/admin/categories', 'AdminController@showCategoriesPage')->name('categories');
+Route::post('/admin/categories', 'CategoriesController@manageCategories');
 
