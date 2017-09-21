@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
 use Request;
 use Redirect;
 use App\Faq;
@@ -36,6 +35,11 @@ class AdminController extends Controller
 
         session_start();
 
+        //$test = Faq::find(3)->status;
+        
+        //dd($test);
+        
+        
         if ($_SESSION) {
 
             $content['admin_name'] = $_SESSION['name'];

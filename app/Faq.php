@@ -10,13 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class Faq extends Model
     {
 
-    public static function getAllApproved()
-        {
-
-        return DB::select('SELECT faqs.id, faqs.question, faqs.answer, faqs.category_id, categories.category_name FROM `faqs` INNER JOIN categories on faqs.category_id = categories.id WHERE status_id=3 ORDER by categories.id');
-        }
-
-
     public static function lastQuestions($count = 10)
         {
 
@@ -57,7 +50,6 @@ class Faq extends Model
                             'questioner_email' => $questioner_email, 'question' => $question, 'answer' => $answer));
         }
 
- 
     public static function count($category = '', $status = '')
         {
 
@@ -77,5 +69,11 @@ class Faq extends Model
 
         return $query;
         }
-    
+
+    public function status()
+        {
+
+        return $this->belongsTo('App\Status');
+        }
+
     }

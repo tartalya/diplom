@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
 use Request;
 use App\Categories;
 use App\Faq;
-
 
 class FaqController extends Controller
     {
@@ -14,10 +12,15 @@ class FaqController extends Controller
     public function showIndex()
         {
 
-        $faq = Faq::GetAllApproved();
+
+        $approvedFaqs = Faq::where('status_id', 3)
+                ->join('categories', 'faqs.category_id', '=', 'categories.id')
+                ->select('faqs.*', 'categories.category_name')
+                ->get();
+
         $categories = Categories::all();
 
-        return view('index')->withOutput($faq)->withCatlist($categories);
+        return view('index')->withOutput($approvedFaqs)->withCatlist($categories);
         }
 
     public function ask()
@@ -44,10 +47,7 @@ class FaqController extends Controller
 
     public function showAskForm()
         {
-
-        $categories = Categories::all();
-
-        return view('ask')->withCategories($categories);
+        return view('ask')->withCategories(Categories::all());
         }
 
     }
