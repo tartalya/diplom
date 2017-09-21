@@ -4,28 +4,31 @@ namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
 use Request;
+use App\Categories;
+use App\Faq;
+
 
 class FaqController extends Controller
     {
 
-    public function ShowIndex()
+    public function showIndex()
         {
 
-        $faq = \App\Faq::GetAllApproved();
-        $categories = \App\Categories::all();
+        $faq = Faq::GetAllApproved();
+        $categories = Categories::all();
 
         return view('index')->withOutput($faq)->withCatlist($categories);
         }
 
-    public function Ask()
+    public function ask()
         {
 
-        $categories = \App\Categories::all();
+        $categories = Categories::all();
 
         if (!empty(Request::input('name')) && !empty(Request::input('email')) && !empty(Request::input('question')) && !empty(Request::input('category'))) {
 
 
-            if ($result = \App\Faq::AddQuestion(Request::input('name'), Request::input('email'), Request::input('question'), Request::input('category'))) {
+            if ($result = Faq::AddQuestion(Request::input('name'), Request::input('email'), Request::input('question'), Request::input('category'))) {
 
                 return view('askok')->withMsg($result);
             } else {
@@ -39,10 +42,10 @@ class FaqController extends Controller
         }
         }
 
-    public function ShowAskForm()
+    public function showAskForm()
         {
 
-        $categories = \App\Categories::all();
+        $categories = Categories::all();
 
         return view('ask')->withCategories($categories);
         }

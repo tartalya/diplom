@@ -10,94 +10,72 @@ use Illuminate\Database\Eloquent\Model;
 class Faq extends Model
     {
 
-    public static function GetStatusList()
+    public static function getAllApproved()
         {
 
-        return DB::table('statuses')->get();
+        return DB::select('SELECT faqs.id, faqs.question, faqs.answer, faqs.category_id, categories.category_name FROM `faqs` INNER JOIN categories on faqs.category_id = categories.id WHERE status_id=3 ORDER by categories.id');
         }
 
-    public static function GetAllApproved()
+
+    public static function lastQuestions($count = 10)
         {
 
-        return DB::select('SELECT qa.id, qa.question, qa.answer, qa.category_id, categories.category_name FROM `qa` INNER JOIN categories on qa.category_id = categories.id WHERE status_id=3 ORDER by categories.id');
+        return DB::select("SELECT faqs.*, categories.category_name FROM `faqs` INNER JOIN categories on faqs.category_id = categories.id ORDER by id DESC LIMIT $count");
         }
 
-    public static function NotAnsweredCount()
+    public static function addQuestion($questionerName, $questionerEmail, $question, $category)
         {
 
-        return DB::table('qa')->whereNULL('answer')->count();
+        return DB::table('faqs')->insertGetId(array('category_id' => $category, 'questioner_name' => $questionerName, 'questioner_email' => $questionerEmail, 'question' => $question));
         }
 
-    public static function LastQuestions($count = 10)
-        {
-
-        return DB::select("SELECT qa.*, categories.category_name FROM `qa` INNER JOIN categories on qa.category_id = categories.id ORDER by id DESC LIMIT $count");
-        }
-
-    public static function AddQuestion($questionerName, $questionerEmail, $question, $category)
-        {
-
-        return DB::table('qa')->insertGetId(array('category_id' => $category, 'questioner_name' => $questionerName, 'questioner_email' => $questionerEmail, 'question' => $question));
-        }
-
-    public static function GetAll($status = '')
+    public static function getAll($status = '')
         {
 
         if (!empty($status)) {
-            return DB::table('qa')
-                            ->join('categories', 'qa.category_id', '=', 'categories.id')
-                            ->join('statuses', 'qa.status_id', '=', 'statuses.id')
-                            ->select('qa.*', 'categories.category_name', 'statuses.status_name')
-                            ->where('qa.status_id', $status)
+            return DB::table('faqs')
+                            ->join('categories', 'faqs.category_id', '=', 'categories.id')
+                            ->join('statuses', 'faqs.status_id', '=', 'statuses.id')
+                            ->select('faqs.*', 'categories.category_name', 'statuses.status_name')
+                            ->where('faqs.status_id', $status)
                             ->get();
         } else {
 
-            return DB::table('qa')
-                            ->join('categories', 'qa.category_id', '=', 'categories.id')
-                            ->join('statuses', 'qa.status_id', '=', 'statuses.id')
-                            ->select('qa.*', 'categories.category_name', 'statuses.status_name')
+            return DB::table('faqs')
+                            ->join('categories', 'faqs.category_id', '=', 'categories.id')
+                            ->join('statuses', 'faqs.status_id', '=', 'statuses.id')
+                            ->select('faqs.*', 'categories.category_name', 'statuses.status_name')
                             ->get();
         }
         }
 
-    public static function UpdateQuestion($id, $category, $status, $questioner_name, $questioner_email, $question, $answer)
+    public static function updateQuestion($id, $category, $status, $questioner_name, $questioner_email, $question, $answer)
         {
 
-        return DB::table('qa')->where('id', $id)
+        return DB::table('faqs')->where('id', $id)
                         ->update(array('category_id' => $category, 'status_id' => $status, 'questioner_name' => $questioner_name,
                             'questioner_email' => $questioner_email, 'question' => $question, 'answer' => $answer));
         }
 
-    public static function RemoveQuestion($id)
-        {
-
-        return DB::table('qa')->where('id', $id)->delete();
-        }
-
-    public static function RemoveQuestionsByCategory($category_id)
-        {
-
-        return DB::table('qa')->where('category_id', $category_id)->delete();
-        }
-
-    public static function Count($category = '', $status = '')
+ 
+    public static function count($category = '', $status = '')
         {
 
         if (!empty($category) && !empty($status)) {
 
-            $query = DB::table('qa')->where('category_id', $category)->where('status_id', $status)->count();
+            $query = DB::table('faqs')->where('category_id', $category)->where('status_id', $status)->count();
         } else if (!empty($category)) {
 
-            $query = DB::table('qa')->where('category_id', $category)->count();
+            $query = DB::table('faqs')->where('category_id', $category)->count();
         } else if (!empty($status)) {
 
-            $query = DB::table('qa')->where('status_id', $status)->count();
+            $query = DB::table('faqs')->where('status_id', $status)->count();
         } else {
 
-            $query = DB::table('qa')->count();
+            $query = DB::table('faqs')->count();
         }
 
         return $query;
         }
-
+    
     }

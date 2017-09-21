@@ -8,12 +8,12 @@ use App\User;
 class UserController extends Controller
     {
 
-    public function ShowLoginForm()
+    public function showLoginForm()
         {
         return view('auth.login');
         }
 
-    public function Auth()
+    public function auth()
         {
 
         if (!empty(Request::input('login')) && !empty(Request::input('password'))) {
@@ -38,7 +38,7 @@ class UserController extends Controller
         }
         }
 
-    public function Logout()
+    public function logout()
         {
 
         session_start();

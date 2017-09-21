@@ -26,9 +26,9 @@ class AdminController extends Controller
         self::$baseContent = Self::getBaseInfo();
         self::$lastQuestions = Faq::LastQuestions();
         self::$categories = Categories::all();
-        self::$statuses = Faq::GetStatusList();
-        self::$questions = Faq::GetAll();
-        self::$users = User::All();
+        self::$statuses = Status::all();
+        self::$questions = Faq::getAll();
+        self::$users = User::all();
         }
 
     public static function getBaseInfo()
@@ -40,10 +40,9 @@ class AdminController extends Controller
 
             $content['admin_name'] = $_SESSION['name'];
             $content['admin_count'] = User::select()->count();
-            $content['qa_count'] = Faq::Count();
+            $content['qa_count'] = Faq::select()->count();
             $content['categories_count'] = Categories::select()->count();
-            //$content['not_answered_count'] = Faq::NotAnsweredCount();
-            $content['not_answered_count'] = Status::where('id', 1)->count();
+            $content['not_answered_count'] = Faq::where('status_id', 1)->count();
 
             return $content;
         }
@@ -53,6 +52,8 @@ class AdminController extends Controller
         {
 
         if ($_SESSION) {
+
+
 
             return view('admin.main')->withContent(self::$baseContent)->withlastQuestions(self::$lastQuestions);
         } else {
@@ -165,7 +166,8 @@ class AdminController extends Controller
 
                 if (!empty(Request::input('id'))) {
 
-                    Faq::RemoveQuestion(Request::input('id'));
+                    Faq::where('id', $id)->destroy();
+
                     return Redirect::back()->with('msg', 'Ворпос успешно удален');
                 } else {
 
