@@ -16,7 +16,7 @@ class Faq extends Model
         return DB::table('faqs')->insertGetId(array('category_id' => $category, 'questioner_name' => $questionerName, 'questioner_email' => $questionerEmail, 'question' => $question));
         }
 
-    public static function getAll($status = '')
+    public static function getAllCombined($status = '')
         {
 
         if (!empty($status)) {

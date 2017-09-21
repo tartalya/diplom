@@ -13,17 +13,13 @@ class AdminController extends Controller
     {
 
     private static $baseContent;
-    private static $categories;
-    private static $statuses;
     private static $questions;
 
     public function __construct()
         {
 
         self::$baseContent = Self::getBaseInfo();
-        self::$categories = Categories::all();
-        self::$statuses = Status::all();
-        self::$questions = Faq::getAll();
+        self::$questions = Faq::getAllCombined();
         }
 
     public static function getBaseInfo()
@@ -32,10 +28,9 @@ class AdminController extends Controller
         session_start();
 
         //$test = Faq::find(3)->status;
-        
         //dd($test);
-        
-        
+
+
         if ($_SESSION) {
 
             $content['admin_name'] = $_SESSION['name'];
@@ -52,11 +47,11 @@ class AdminController extends Controller
         {
 
         if ($_SESSION) {
-            
+
             $lastQuestion = Faq::join('categories', 'faqs.category_id', '=', 'categories.id')
-                ->select('faqs.*', 'categories.category_name')
+                    ->select('faqs.*', 'categories.category_name')
                     ->orderBy('id', 'DESC')->take(15)
-                ->get();
+                    ->get();
 
             return view('admin.main')->withContent(self::$baseContent)->withlastQuestions($lastQuestion);
         } else {
@@ -130,19 +125,19 @@ class AdminController extends Controller
         {
 
         $questions = Faq::GetAll(1);
-        
+
         /*
-        $questions = Faq::join('categories', 'faqs.category_id', '=', 'categories.id')
-                ->join('statuses', 'faqs.status_id', '=', 'statuses.id')
-                ->select('faqs.*', 'categories.category_name', 'statuses.status_name')
-                ->where('faqs.status_id', 1)
-                ->get();
-*/
+          $questions = Faq::join('categories', 'faqs.category_id', '=', 'categories.id')
+          ->join('statuses', 'faqs.status_id', '=', 'statuses.id')
+          ->select('faqs.*', 'categories.category_name', 'statuses.status_name')
+          ->where('faqs.status_id', 1)
+          ->get();
+         */
 
         return view('admin.answer')->withContent(self::$baseContent)
                         ->withQuestions($questions)
-                        ->withCategories(self::$categories)
-                        ->withStatuses(self::$statuses)
+                        ->withCategories(Categories::all())
+                        ->withStatuses(Status::all())
                         ->withDescription('Список вопросов нуждающихся в ответе');
         }
 
@@ -151,8 +146,8 @@ class AdminController extends Controller
 
         return view('admin.answer')->withContent(self::$baseContent)
                         ->withQuestions(self::$questions)
-                        ->withCategories(self::$categories)
-                        ->withStatuses(self::$statuses)
+                        ->withCategories(Categories::all())
+                        ->withStatuses(Status::all())
                         ->withDescription('Список всех вопросов');
         }
 
@@ -192,7 +187,7 @@ class AdminController extends Controller
         {
 
         return view('admin.categories')->withContent(self::$baseContent)
-                        ->withCategories(self::$categories)
+                        ->withCategories(Categories::all())
                         ->withDescription('Управление категориями');
         }
 
@@ -207,7 +202,6 @@ class AdminController extends Controller
 
         if (Request::has('category_id') && !empty(Request::input('category_id'))) {
 
-
             $category_id = Request::input('category_id');
         } else {
 
@@ -216,8 +210,8 @@ class AdminController extends Controller
 
         return view('admin.list')->withContent(self::$baseContent)
                         ->withQuestions(self::$questions)
-                        ->withCategories(self::$categories)
-                        ->withStatuses(self::$statuses)
+                        ->withCategories(Categories::all())
+                        ->withStatuses(Status::all())
                         ->withSelectedId($category_id)
                         ->withDescription('Список вопросов в категории');
         }
