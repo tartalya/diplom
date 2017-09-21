@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Request;
@@ -7,22 +6,22 @@ use App\Categories;
 use App\Faq;
 
 class FaqController extends Controller
-    {
+{
 
     public function showIndex()
-        {
+    {
 
 
         $approvedFaqs = Faq::where('status_id', 3)
-                ->join('categories', 'faqs.category_id', '=', 'categories.id')
-                ->select('faqs.*', 'categories.category_name')
-                ->get();
+            ->join('categories', 'faqs.category_id', '=', 'categories.id')
+            ->select('faqs.*', 'categories.category_name')
+            ->get();
 
         return view('index')->withOutput($approvedFaqs)->withCatlist(Categories::all());
-        }
+    }
 
     public function ask()
-        {
+    {
 
         $categories = Categories::all();
 
@@ -41,11 +40,10 @@ class FaqController extends Controller
 
             return view('ask')->withCategories($categories)->withMsg('Все поля обязательны для заполнения');
         }
-        }
+    }
 
     public function showAskForm()
-        {
+    {
         return view('ask')->withCategories(Categories::all());
-        }
-
     }
+}

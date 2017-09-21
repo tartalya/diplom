@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
@@ -10,10 +9,10 @@ use App\Categories;
 use App\Faq;
 
 class CategoriesController extends Controller
-    {
+{
 
     public function manageCategories()
-        {
+    {
 
         switch (Request::input('action')) {
 
@@ -51,10 +50,10 @@ class CategoriesController extends Controller
                     return Redirect::back()->with('msg', 'Ошибка переименования категории');
                 }
         }
-        }
+    }
 
     public static function getNameById($id)
-        {
+    {
 
         if (!empty($id)) {
 
@@ -63,6 +62,5 @@ class CategoriesController extends Controller
 
             return '';
         }
-        }
-
     }
+}

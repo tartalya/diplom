@@ -1,20 +1,19 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Request;
 use App\User;
 
 class UserController extends Controller
-    {
+{
 
     public function showLoginForm()
-        {
+    {
         return view('auth.login');
-        }
+    }
 
     public function auth()
-        {
+    {
 
         if (!empty(Request::input('login')) && !empty(Request::input('password'))) {
 
@@ -36,14 +35,13 @@ class UserController extends Controller
 
             return view('auth.login')->withMsg('Нужно заполнить все поля');
         }
-        }
+    }
 
     public function logout()
-        {
+    {
 
         session_start();
         session_destroy();
         return redirect()->route('login');
-        }
-
     }
+}

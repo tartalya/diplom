@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Request;
@@ -10,20 +9,20 @@ use App\User;
 use App\Status;
 
 class AdminController extends Controller
-    {
+{
 
     private static $baseContent;
     private static $questions;
 
     public function __construct()
-        {
+    {
 
         self::$baseContent = Self::getBaseInfo();
         self::$questions = Faq::getAllCombined();
-        }
+    }
 
     public static function getBaseInfo()
-        {
+    {
 
         session_start();
 
@@ -41,33 +40,33 @@ class AdminController extends Controller
 
             return $content;
         }
-        }
+    }
 
     public function showAdminPanel()
-        {
+    {
 
         if ($_SESSION) {
 
             $lastQuestion = Faq::join('categories', 'faqs.category_id', '=', 'categories.id')
-                    ->select('faqs.*', 'categories.category_name')
-                    ->orderBy('id', 'DESC')->take(15)
-                    ->get();
+                ->select('faqs.*', 'categories.category_name')
+                ->orderBy('id', 'DESC')->take(15)
+                ->get();
 
             return view('admin.main')->withContent(self::$baseContent)->withlastQuestions($lastQuestion);
         } else {
 
             return redirect()->route('login');
         }
-        }
+    }
 
     public function manageUsers()
-        {
+    {
 
         return view('admin.edit')->withContent(self::$baseContent)->withUsers(User::all());
-        }
+    }
 
     public function editUser()
-        {
+    {
 
         switch (Request::input('action')) {
 
@@ -119,10 +118,10 @@ class AdminController extends Controller
 
                 break;
         }
-        }
+    }
 
     public function showAnswerPage()
-        {
+    {
 
         $questions = Faq::GetAll(1);
 
@@ -135,24 +134,24 @@ class AdminController extends Controller
          */
 
         return view('admin.answer')->withContent(self::$baseContent)
-                        ->withQuestions($questions)
-                        ->withCategories(Categories::all())
-                        ->withStatuses(Status::all())
-                        ->withDescription('Список вопросов нуждающихся в ответе');
-        }
+                ->withQuestions($questions)
+                ->withCategories(Categories::all())
+                ->withStatuses(Status::all())
+                ->withDescription('Список вопросов нуждающихся в ответе');
+    }
 
     public function showManagePage()
-        {
+    {
 
         return view('admin.answer')->withContent(self::$baseContent)
-                        ->withQuestions(self::$questions)
-                        ->withCategories(Categories::all())
-                        ->withStatuses(Status::all())
-                        ->withDescription('Список всех вопросов');
-        }
+                ->withQuestions(self::$questions)
+                ->withCategories(Categories::all())
+                ->withStatuses(Status::all())
+                ->withDescription('Список всех вопросов');
+    }
 
     public function manageAnswer()
-        {
+    {
 
         switch (Request::input('action')) {
 
@@ -181,24 +180,24 @@ class AdminController extends Controller
 
                 break;
         }
-        }
+    }
 
     public function showCategoriesPage()
-        {
+    {
 
         return view('admin.categories')->withContent(self::$baseContent)
-                        ->withCategories(Categories::all())
-                        ->withDescription('Управление категориями');
-        }
+                ->withCategories(Categories::all())
+                ->withDescription('Управление категориями');
+    }
 
     public static function GetCount($category = '', $status = '')
-        {
+    {
 
         return Faq::Count($category, $status);
-        }
+    }
 
     public static function showAnswerByCategory()
-        {
+    {
 
         if (Request::has('category_id') && !empty(Request::input('category_id'))) {
 
@@ -209,11 +208,10 @@ class AdminController extends Controller
         }
 
         return view('admin.list')->withContent(self::$baseContent)
-                        ->withQuestions(self::$questions)
-                        ->withCategories(Categories::all())
-                        ->withStatuses(Status::all())
-                        ->withSelectedId($category_id)
-                        ->withDescription('Список вопросов в категории');
-        }
-
+                ->withQuestions(self::$questions)
+                ->withCategories(Categories::all())
+                ->withStatuses(Status::all())
+                ->withSelectedId($category_id)
+                ->withDescription('Список вопросов в категории');
     }
+}
