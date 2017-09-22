@@ -57,7 +57,8 @@
 
                 <input type="hidden" name="id" value="{{$value->id}}">
                 <input type="submit" name="action" value="edit">
-                <input type="submit" name="action" value="delete">
+                <input type="submit" name="action" value="delete">              
+                
             </td>
         </form>
         </tr>

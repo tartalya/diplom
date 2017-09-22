@@ -170,7 +170,7 @@ class AdminController extends Controller
 
                 if (!empty(Request::input('id'))) {
 
-                    Faq::where('id', $id)->destroy();
+                    Faq::where('id', Request::input('id'))->delete();
 
                     return Redirect::back()->with('msg', 'Ворпос успешно удален');
                 } else {
