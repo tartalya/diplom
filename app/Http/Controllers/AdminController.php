@@ -7,6 +7,7 @@ use App\Faq;
 use App\Categories;
 use App\User;
 use App\Status;
+use App\Log;
 
 class AdminController extends Controller
 {
@@ -44,7 +45,6 @@ class AdminController extends Controller
 
     public function showAdminPanel()
     {
-
         if ($_SESSION) {
 
             $lastQuestion = Faq::join('categories', 'faqs.category_id', '=', 'categories.id')
@@ -74,6 +74,7 @@ class AdminController extends Controller
 
                 if (!empty(Request::input('id')) && Request::input('id') != 1) {
 
+                    Log::write('Удалил пользователя ' . User::where('id', Request::input('id'))->first()->name);
                     User::destroy(Request::input('id'));
                     return Redirect::back()->with('msg', 'Пользователь удален');
                 } else if (Request::input('id') == 1) {
@@ -91,7 +92,7 @@ class AdminController extends Controller
                 if (!empty(Request::input('id')) && !empty(Request::input('name')) && !empty(Request::input('login')) && !empty(Request::input('email'))) {
 
                     User::Edit(Request::input('id'), Request::input('name'), Request::input('login'), Request::input('email'), Request::input('password'));
-
+                    Log::write('Изменил данные пользователя ' . Request::input('name'));
 
                     return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
                 } else {
@@ -109,7 +110,7 @@ class AdminController extends Controller
 
 
                     User::firstOrCreate(array('name' => Request::input('name'), 'login' => Request::input('login'), 'email' => Request::input('email'), 'password' => md5(Request::input('password'))));
-
+                    Log::write('Добавил пользователя ' . Request::input('name'));
                     return Redirect::back()->with('msg', 'Пользователь успешно добавлен');
                 } else {
 
