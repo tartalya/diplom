@@ -15,7 +15,7 @@
 
     <form name="category_id" method="POST"> 
 
-        <select name="category_id">
+        <select name="category_id" onChange="submit()">
 
             @foreach ($categories as $category)
 
@@ -32,7 +32,7 @@
             @endforeach
         </select> 
 
-        <input type="submit" name="action" value="change"> Применить</input>
+        <input type="hidden" name="action" value="change"></input>
 
     </form>
 
