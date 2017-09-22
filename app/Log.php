@@ -13,12 +13,10 @@ class Log extends Model
 
         if ($string) {
 
-
-            $output = date("Y-m-d H:i:s") . ' ' . $string . "\r\n";
-
+            $output = date("Y-m-d H:i:s") . ' ' . $_SESSION['name'] . ' ' .$string . "\r\n";
             file_put_contents(self::$logFile, $output, FILE_APPEND);
         } else {
-            return FALSE;
+            return false;
         }
     }
 }
