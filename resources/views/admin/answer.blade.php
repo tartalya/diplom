@@ -55,7 +55,7 @@
                 @foreach ($categories as $category)
                 
                 
-                @if ($category->category_name == $value->category_name) 
+                @if ($category->category_name == $value->category->category_name) 
                 
                 <option selected value="{{$category->id}}">{{$category->category_name}}</option>
                 
@@ -81,7 +81,7 @@
                 @foreach ($statuses as $status)
                 
                 
-                @if ($status->status_name == $value->status_name) 
+                @if ($status->status_name == $value->status->status_name) 
                 
                 <option selected value="{{$status->id}}">{{$status->status_name}}</option>
                 

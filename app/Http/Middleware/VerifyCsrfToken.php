@@ -21,6 +21,7 @@ class VerifyCsrfToken extends Middleware
         '/admin/answer/add',
         '/admin/answer/manage',
         '/admin/categories',
-        '/admin/answer/category'
+        '/admin/answer/category',
+        '/admin/answer/hided'
     ];
 }

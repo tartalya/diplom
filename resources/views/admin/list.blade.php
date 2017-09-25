@@ -59,7 +59,7 @@
                 <td>{{$question->id}}</td>
                 <td>{{$question->date_created}}</td>
                 <td>{{$question->question}}</td>
-                <td>{{$question->status_name}}</td>
+                <td>{{$question->status->status_name}}</td>
 
             </tr>
 

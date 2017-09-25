@@ -41,9 +41,10 @@
 
 
                 </td>
-                <td>{{\App\Http\Controllers\AdminController::GetCount($category->id)}}</td>
-                <td>{{\App\Http\Controllers\AdminController::GetCount($category->id, 3)}}</td>
-                <td>{{\App\Http\Controllers\AdminController::GetCount($category->id, 1)}}</td>
+
+                <td>{{\App\Faq::where('category_id', $category->id)->count()}}</td>
+                <td>{{\App\Faq::where('category_id', $category->id)->where('status_id', 3)->count()}}</td>
+                <td>{{\App\Faq::where('category_id', $category->id)->where('status_id', 1)->count()}}</td>
 
                 <td><input type="hidden" name="category_id" value="{{$category->id}}"></td>
                 <td><input type="submit" name="action" value="edit"></td>

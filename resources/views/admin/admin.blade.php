@@ -21,6 +21,8 @@
 
     <script>
 
+
+
 $("#message").show();
 setTimeout(function () {
     $("#message").hide();
@@ -63,6 +65,10 @@ setTimeout(function () {
 
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/answer/add">Список неотвеченных</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/answer/hided">Список скрытых</a>
                         </li>
 
                         <li class="nav-item">

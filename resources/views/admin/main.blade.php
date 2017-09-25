@@ -50,7 +50,7 @@
                 </td>
 
                 <td>
-                    {{$value->category_name}}
+                    {{$value->category->category_name}}
                 </td>
 
             </tr>

@@ -10,12 +10,7 @@ class FaqController extends Controller
 
     public function showIndex()
     {
-
-
-        $approvedFaqs = Faq::where('status_id', 3)
-            ->join('categories', 'faqs.category_id', '=', 'categories.id')
-            ->select('faqs.*', 'categories.category_name')
-            ->get();
+        $approvedFaqs = Faq::where('status_id', 3)->get();
 
         return view('index')->withOutput($approvedFaqs)->withCatlist(Category::all());
     }
@@ -28,7 +23,11 @@ class FaqController extends Controller
         if (!empty(Request::input('name')) && !empty(Request::input('email')) && !empty(Request::input('question')) && !empty(Request::input('category'))) {
 
 
-            if ($result = Faq::AddQuestion(Request::input('name'), Request::input('email'), Request::input('question'), Request::input('category'))) {
+
+            if ($result = Faq::create(array('questioner_name' => Request::input('name'),
+                    'questioner_email' => Request::input('email'),
+                    'question' => Request::input('question'),
+                    'category_id' => Request::input('category')))) {
 
                 return view('askok')->withMsg($result);
             } else {

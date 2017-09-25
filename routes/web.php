@@ -27,11 +27,15 @@ Route::post('/ask', 'FaqController@ask');
 Route::get('/admin/answer/add', 'AdminController@showAnswerPage')->name('answer');
 Route::post('/admin/answer/add', 'AdminController@manageAnswer');
 
+Route::get('/admin/answer/hided', 'AdminController@showHidedPage')->name('hided');
+Route::post('/admin/answer/hided', 'AdminController@manageAnswer');
+
+
 Route::get('/admin/answer/manage', 'AdminController@showManagePage')->name('manage');
 Route::post('/admin/answer/manage', 'AdminController@manageAnswer');
 
 Route::get('/admin/answer/category', 'AdminController@showAnswerByCategory');
-Route::post('/admin/answer/category', 'AdminController@showAnswerByCategory');
+Route::post('/admin/answer/category', 'AdminController@showAnswerByPostedCategory');
 
 Route::get('/admin/categories', 'AdminController@showCategoriesPage')->name('categories');
 Route::post('/admin/categories', 'CategoryController@manageCategories');

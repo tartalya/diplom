@@ -12,57 +12,38 @@ use App\Log;
 class AdminController extends Controller
 {
 
-    private static $baseContent;
-    private static $questions;
-
     public function __construct()
     {
+        session_start();
 
-        self::$baseContent = Self::getBaseInfo();
-        self::$questions = Faq::getAllCombined();
+        if (!isset($_SESSION['name'])) {
+
+            Redirect::to('login')->send();
+        }
     }
 
     public static function getBaseInfo()
     {
+        $content['admin_name'] = $_SESSION['name'];
+        $content['admin_count'] = User::all()->count();
+        $content['qa_count'] = Faq::all()->count();
+        $content['categories_count'] = Category::all()->count();
+        $content['not_answered_count'] = Faq::where('status_id', 1)->count();
 
-        session_start();
-
-        //$test = Faq::find(3)->status;
-        //dd($test);
-
-
-        if ($_SESSION) {
-
-            $content['admin_name'] = $_SESSION['name'];
-            $content['admin_count'] = User::all()->count();
-            $content['qa_count'] = Faq::all()->count();
-            $content['categories_count'] = Category::all()->count();
-            $content['not_answered_count'] = Faq::where('status_id', 1)->count();
-
-            return $content;
-        }
+        return $content;
     }
 
     public function showAdminPanel()
     {
-        if ($_SESSION) {
+        $lastQuestion = Faq::orderBy('id', 'DESC')->take(15)->get();
 
-            $lastQuestion = Faq::join('categories', 'faqs.category_id', '=', 'categories.id')
-                ->select('faqs.*', 'categories.category_name')
-                ->orderBy('id', 'DESC')->take(15)
-                ->get();
-
-            return view('admin.main')->withContent(self::$baseContent)->withlastQuestions($lastQuestion);
-        } else {
-
-            return redirect()->route('login');
-        }
+        return view('admin.main')->withContent(self::getBaseInfo())->withlastQuestions($lastQuestion);
     }
 
     public function manageUsers()
     {
 
-        return view('admin.edit')->withContent(self::$baseContent)->withUsers(User::all());
+        return view('admin.edit')->withContent(self::getBaseInfo())->withUsers(User::all());
     }
 
     public function editUser()
@@ -124,28 +105,32 @@ class AdminController extends Controller
     public function showAnswerPage()
     {
 
-        $questions = Faq::GetAllCombined(1);
+        $questions = Faq::where('status_id', 1)->get();
 
-        /*
-          $questions = Faq::join('categories', 'faqs.category_id', '=', 'categories.id')
-          ->join('statuses', 'faqs.status_id', '=', 'statuses.id')
-          ->select('faqs.*', 'categories.category_name', 'statuses.status_name')
-          ->where('faqs.status_id', 1)
-          ->get();
-         */
-
-        return view('admin.answer')->withContent(self::$baseContent)
+        return view('admin.answer')->withContent(self::getBaseInfo())
                 ->withQuestions($questions)
                 ->withCategories(Category::all())
                 ->withStatuses(Status::all())
                 ->withDescription('Список вопросов нуждающихся в ответе');
     }
 
+    public function showHidedPage()
+    {
+
+        $questions = Faq::where('status_id', 2)->get();
+
+        return view('admin.answer')->withContent(self::getBaseInfo())
+                ->withQuestions($questions)
+                ->withCategories(Category::all())
+                ->withStatuses(Status::all())
+                ->withDescription('Список скрытых вопросов');
+    }
+
     public function showManagePage()
     {
 
-        return view('admin.answer')->withContent(self::$baseContent)
-                ->withQuestions(self::$questions)
+        return view('admin.answer')->withContent(self::getBaseInfo())
+                ->withQuestions(Faq::all())
                 ->withCategories(Category::all())
                 ->withStatuses(Status::all())
                 ->withDescription('Список всех вопросов');
@@ -186,33 +171,40 @@ class AdminController extends Controller
     public function showCategoriesPage()
     {
 
-        return view('admin.categories')->withContent(self::$baseContent)
+        return view('admin.categories')->withContent(self::getBaseInfo())
                 ->withCategories(Category::all())
                 ->withDescription('Управление категориями');
-    }
-
-    public static function GetCount($category = '', $status = '')
-    {
-
-        return Faq::Count($category, $status);
     }
 
     public static function showAnswerByCategory()
     {
 
-        if (Request::has('category_id') && !empty(Request::input('category_id'))) {
+        $category_id = Category::all()->first()->id;
 
-            $category_id = Request::input('category_id');
-        } else {
 
-            $category_id = Category::all()->first()->id;
-        }
-
-        return view('admin.list')->withContent(self::$baseContent)
-                ->withQuestions(self::$questions)
+        return view('admin.list')->withContent(self::getBaseInfo())
+                ->withQuestions(Faq::all())
                 ->withCategories(Category::all())
                 ->withStatuses(Status::all())
                 ->withSelectedId($category_id)
                 ->withDescription('Список вопросов в категории');
+    }
+
+    public static function showAnswerByPostedCategory()
+    {
+
+        if (!empty(Request::input('category_id'))) {
+
+            $category_id = Request::input('category_id');
+
+            return view('admin.list')->withContent(self::getBaseInfo())
+                    ->withQuestions(Faq::all())
+                    ->withCategories(Category::all())
+                    ->withStatuses(Status::all())
+                    ->withSelectedId($category_id)
+                    ->withDescription('Список вопросов в категории');
+        } else {
+            return false;
+        }
     }
 }
