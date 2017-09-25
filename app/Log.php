@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class Log extends Model
 {
 
-    private static $logFile = __DIR__ . '../admin.log';
+    private static $logFile = __DIR__ . '/../storage/logs/admin.log';
 
     public static function write($string)
     {

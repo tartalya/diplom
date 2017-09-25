@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use Request;
-use App\Categories;
+use App\Category;
 use App\Faq;
 
 class FaqController extends Controller
@@ -17,13 +17,13 @@ class FaqController extends Controller
             ->select('faqs.*', 'categories.category_name')
             ->get();
 
-        return view('index')->withOutput($approvedFaqs)->withCatlist(Categories::all());
+        return view('index')->withOutput($approvedFaqs)->withCatlist(Category::all());
     }
 
     public function ask()
     {
 
-        $categories = Categories::all();
+        $categories = Category::all();
 
         if (!empty(Request::input('name')) && !empty(Request::input('email')) && !empty(Request::input('question')) && !empty(Request::input('category'))) {
 
@@ -44,6 +44,6 @@ class FaqController extends Controller
 
     public function showAskForm()
     {
-        return view('ask')->withCategories(Categories::all());
+        return view('ask')->withCategories(Category::all());
     }
 }

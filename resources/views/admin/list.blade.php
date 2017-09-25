@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h2>{{$description}} {{\App\Http\Controllers\CategoriesController::getNameById($selectedId)}}</h2>
+<h2>{{$description}} {{\App\Http\Controllers\CategoryController::getNameById($selectedId)}}</h2>
 <div class="table-responsive">
 
 

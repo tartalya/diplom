@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 
 use Request;
 use Redirect;
-use App\Categories;
+use App\Category;
 use App\Faq;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
 
     public function manageCategories()
@@ -19,7 +19,7 @@ class CategoriesController extends Controller
             case 'add':
 
                 if (Request::input('category_name')) {
-                    Categories::firstOrCreate(array('category_name' => Request::input('category_name')));
+                    Category::firstOrCreate(array('category_name' => Request::input('category_name')));
                     return Redirect::back()->with('msg', 'Категория успешно добавлена');
                 } else {
                     return Redirect::back()->with('msg', 'Ошибка добавления категории');
@@ -32,7 +32,7 @@ class CategoriesController extends Controller
 
                 if (Request::input('category_id')) {
                     Faq::where('category_id', Request::input('category_id'))->delete();
-                    Categories::destroy(Request::input('category_id'));
+                    Category::destroy(Request::input('category_id'));
                     return Redirect::back()->with('msg', 'Категория успешно удалена');
                 } else {
 
@@ -44,7 +44,7 @@ class CategoriesController extends Controller
             case 'edit':
 
                 if (Request::input('category_id') && Request::input('category_name')) {
-                    Categories::where('id', Request::input('category_id'))->update(array('category_name' => Request::input('category_name')));
+                    Category::where('id', Request::input('category_id'))->update(array('category_name' => Request::input('category_name')));
                     return Redirect::back()->with('msg', 'Категория успешно изменена');
                 } else {
                     return Redirect::back()->with('msg', 'Ошибка переименования категории');
@@ -57,7 +57,7 @@ class CategoriesController extends Controller
 
         if (!empty($id)) {
 
-            return Categories::where('id', $id)->first()->category_name;
+            return Category::where('id', $id)->first()->category_name;
         } else {
 
             return '';

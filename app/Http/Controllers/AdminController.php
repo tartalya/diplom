@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Request;
 use Redirect;
 use App\Faq;
-use App\Categories;
+use App\Category;
 use App\User;
 use App\Status;
 use App\Log;
@@ -34,9 +34,9 @@ class AdminController extends Controller
         if ($_SESSION) {
 
             $content['admin_name'] = $_SESSION['name'];
-            $content['admin_count'] = User::select()->count();
-            $content['qa_count'] = Faq::select()->count();
-            $content['categories_count'] = Categories::select()->count();
+            $content['admin_count'] = User::all()->count();
+            $content['qa_count'] = Faq::all()->count();
+            $content['categories_count'] = Category::all()->count();
             $content['not_answered_count'] = Faq::where('status_id', 1)->count();
 
             return $content;
@@ -136,7 +136,7 @@ class AdminController extends Controller
 
         return view('admin.answer')->withContent(self::$baseContent)
                 ->withQuestions($questions)
-                ->withCategories(Categories::all())
+                ->withCategories(Category::all())
                 ->withStatuses(Status::all())
                 ->withDescription('Список вопросов нуждающихся в ответе');
     }
@@ -146,7 +146,7 @@ class AdminController extends Controller
 
         return view('admin.answer')->withContent(self::$baseContent)
                 ->withQuestions(self::$questions)
-                ->withCategories(Categories::all())
+                ->withCategories(Category::all())
                 ->withStatuses(Status::all())
                 ->withDescription('Список всех вопросов');
     }
@@ -187,7 +187,7 @@ class AdminController extends Controller
     {
 
         return view('admin.categories')->withContent(self::$baseContent)
-                ->withCategories(Categories::all())
+                ->withCategories(Category::all())
                 ->withDescription('Управление категориями');
     }
 
@@ -205,12 +205,12 @@ class AdminController extends Controller
             $category_id = Request::input('category_id');
         } else {
 
-            $category_id = Categories::select()->first()->id;
+            $category_id = Category::all()->first()->id;
         }
 
         return view('admin.list')->withContent(self::$baseContent)
                 ->withQuestions(self::$questions)
-                ->withCategories(Categories::all())
+                ->withCategories(Category::all())
                 ->withStatuses(Status::all())
                 ->withSelectedId($category_id)
                 ->withDescription('Список вопросов в категории');
