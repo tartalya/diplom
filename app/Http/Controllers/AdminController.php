@@ -143,8 +143,19 @@ class AdminController extends Controller
 
             case 'edit':
 
-                if (!empty(Request::input('category')) && !empty(Request::input('status')) && !empty(Request::input('questioner_name')) && !empty(Request::input('questioner_email')) && !empty(Request::input('question')) && !empty(Request::input('answer')) && !empty(Request::input('id'))) {
-                    Faq::UpdateQuestion(Request::input('id'), Request::input('category'), Request::input('status'), Request::input('questioner_name'), Request::input('questioner_email'), Request::input('question'), Request::input('answer'));
+                if (!empty(Request::input('category')) && !empty(Request::input('status')) &&
+                    !empty(Request::input('questioner_name')) && !empty(Request::input('questioner_email')) &&
+                    !empty(Request::input('question')) && !empty(Request::input('answer')) &&
+                    !empty(Request::input('id'))) {
+
+                    Faq::where('id', Request::input('id'))->update(array('category_id' => Request::input('category'),
+                        'status_id' => Request::input('status'),
+                        'questioner_name' => Request::input('questioner_name'),
+                        'questioner_email' => Request::input('questioner_email'),
+                        'question' => Request::input('question'),
+                        'answer' => Request::input('answer')
+                    ));
+                    Log::write('Обновил вопрос номер ' . Request::input('id'));
                     return Redirect::back()->with('msg', 'Вопрос успешно обновлен');
                 } else {
 
@@ -157,7 +168,7 @@ class AdminController extends Controller
                 if (!empty(Request::input('id'))) {
 
                     Faq::where('id', Request::input('id'))->delete();
-
+                    Log::write('Удалил вопрос номер ' . Request::input('id'));
                     return Redirect::back()->with('msg', 'Ворпос успешно удален');
                 } else {
 

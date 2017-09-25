@@ -1,15 +1,25 @@
 <?php
-
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 
 use App\User;
-use Request;
+//use Request;
 use Redirect;
 
 class UserBetterController extends Controller
 {
+
+    public function __construct()
+    {
+        session_start();
+
+        if (!isset($_SESSION['name'])) {
+
+            Redirect::to('login')->send();
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +49,7 @@ class UserBetterController extends Controller
     public function store(Request $request)
     {
         echo 'store';
-        dd(Request::input('action'));
+        dd($request->all());
     }
 
     /**
@@ -63,7 +73,14 @@ class UserBetterController extends Controller
     {
         echo 'edit' . $id;
         
-        return User::find($id);
+        if (User::find($id)) {
+
+        return view('admin.edit')->withContent(AdminController::getBaseInfo())->withUsers(User::where('id', $id)->get());
+        } else {
+            
+            return Redirect::back()->with('msg', 'Такого пользователя не существует');
+        }
+        
     }
 
     /**
@@ -76,6 +93,7 @@ class UserBetterController extends Controller
     public function update(Request $request, $id)
     {
         echo 'update';
+        dd($request->name);
     }
 
     /**

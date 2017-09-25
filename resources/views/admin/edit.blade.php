@@ -31,7 +31,7 @@
 
             @foreach ($users as $value)
             <tr>
-        <form name="admin_edit" method="POST">
+        <form name="admin_edit" method="POST" action="/admin/users/{{$value->id}}/">
             <td>
                 {{$value->id}}
             </td>
@@ -57,7 +57,9 @@
 
                 <input type="hidden" name="id" value="{{$value->id}}">
                 <input type="submit" name="action" value="edit">
-                <input type="submit" name="action" value="delete">              
+                <input type="submit" name="action" value="delete">     
+                {{ method_field('PUT') }}
+                
                 
             </td>
         </form>
