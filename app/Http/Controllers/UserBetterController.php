@@ -2,10 +2,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\User;
-//use Request;
 use Redirect;
+use App\Log;
 
 class UserBetterController extends Controller
 {
@@ -37,7 +36,7 @@ class UserBetterController extends Controller
      */
     public function create()
     {
-        echo 'create';
+        
     }
 
     /**
@@ -48,8 +47,19 @@ class UserBetterController extends Controller
      */
     public function store(Request $request)
     {
-        echo 'store';
-        dd($request->all());
+
+        if (!empty($request->name) && !empty($request->login) && !empty($request->email) && !empty($request->password)) {
+
+            User::firstOrCreate(array('name' => $request->name,
+                'login' => $request->login,
+                'email' => $request->email,
+                'password' => md5($request->password)));
+            Log::write('Добавил пользователя ' . $request->name);
+            return Redirect::back()->with('msg', 'Пользователь успешно добавлен');
+        } else {
+
+            return Redirect::back()->with('msg', 'Все поля обязательны для заполнения');
+        }
     }
 
     /**
@@ -60,7 +70,13 @@ class UserBetterController extends Controller
      */
     public function show($id)
     {
-        echo 'show';
+        if (User::find($id)) {
+
+            return view('admin.edit')->withContent(AdminController::getBaseInfo())->withUsers(User::where('id', $id)->get());
+        } else {
+
+            return Redirect::back()->with('msg', 'Такого пользователя не существует');
+        }
     }
 
     /**
@@ -71,16 +87,14 @@ class UserBetterController extends Controller
      */
     public function edit($id)
     {
-        echo 'edit' . $id;
-        
+
         if (User::find($id)) {
 
-        return view('admin.edit')->withContent(AdminController::getBaseInfo())->withUsers(User::where('id', $id)->get());
+            return view('admin.edit')->withContent(AdminController::getBaseInfo())->withUsers(User::where('id', $id)->get());
         } else {
-            
+
             return Redirect::back()->with('msg', 'Такого пользователя не существует');
         }
-        
     }
 
     /**
@@ -92,8 +106,18 @@ class UserBetterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo 'update';
-        dd($request->name);
+
+        if (!empty($request->id) && !empty($request->name) && !empty($request->login) && !empty($request->email)) {
+
+            User::Edit($request->id, $request->name, $request->login, $request->email, $request->password);
+            Log::write('Изменил данные пользователя ' . $request->name);
+
+            return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
+        } else {
+
+
+            return Redirect::back()->with('msg', 'Поля Имя, Login и email не должны быть пустыми');
+        }
     }
 
     /**
@@ -104,6 +128,17 @@ class UserBetterController extends Controller
      */
     public function destroy($id)
     {
-        echo 'destroy';
+        if (!empty($id) && $id != 1) {
+
+            Log::write('Удалил пользователя ' . User::where('id', $id)->first()->name);
+            User::destroy($id);
+            return Redirect::back()->with('msg', 'Пользователь удален');
+        } else if ($id == 1) {
+
+            return Redirect::back()->with('msg', 'Нельзя удалить супер администратора');
+        } else {
+
+            return Redirect::back()->with('msg', 'Ошибка удаления пользователя');
+        }
     }
 }

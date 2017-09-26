@@ -56,13 +56,23 @@
             <td>
 
                 <input type="hidden" name="id" value="{{$value->id}}">
-                <input type="submit" name="action" value="edit">
-                <input type="submit" name="action" value="delete">     
+                <input type="submit" name="action" value="Изменить">   
                 {{ method_field('PUT') }}
-                
-                
-            </td>
+
+
+            
         </form>
+
+
+        <form method="POST" action="/admin/users/{{$value->id}}/">
+
+            {{ method_field('DELETE') }}  
+
+            <input type="hidden" name="id" value="{{$value->id}}">
+            <input type="submit" name="action" value="Удалить">
+        </form>
+
+        </td>
         </tr>
         @endforeach
 
@@ -88,7 +98,7 @@
 
 <div class="table-responsive">
 
-    <form name="user_add" method="POST">    
+    <form name="user_add" method="POST" action="/admin/users">    
 
         <table class="table table-striped">
 
@@ -117,7 +127,7 @@
                     <input type="password" name="password">
                 </td>
                 <td>
-                    <input type="submit" name="action" value="add">
+                    <input type="submit" name="action" value="Создать">
                 </td>
 
             </tr>

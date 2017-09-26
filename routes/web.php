@@ -18,8 +18,8 @@ Route::get('/login', 'UserController@showLoginForm')->name('login');
 Route::post('/login', 'UserController@auth');
 
 Route::get('/admin', 'AdminController@showAdminPanel')->name('admin');
-Route::get('/admin/users', 'AdminController@manageUsers')->name('manageUsers');
-Route::post('/admin/users', 'AdminController@editUser');
+//Route::get('/admin/users', 'AdminController@manageUsers')->name('manageUsers');
+//Route::post('/admin/users', 'AdminController@editUser');
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/ask', 'FaqController@showAskForm')->name('ask');
 Route::post('/ask', 'FaqController@ask');

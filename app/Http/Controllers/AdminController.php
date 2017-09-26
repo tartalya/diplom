@@ -40,68 +40,6 @@ class AdminController extends Controller
         return view('admin.main')->withContent(self::getBaseInfo())->withlastQuestions($lastQuestion);
     }
 
-    public function manageUsers()
-    {
-
-        return view('admin.edit')->withContent(self::getBaseInfo())->withUsers(User::all());
-    }
-
-    public function editUser()
-    {
-
-        switch (Request::input('action')) {
-
-            case 'delete':
-
-                if (!empty(Request::input('id')) && Request::input('id') != 1) {
-
-                    Log::write('Удалил пользователя ' . User::where('id', Request::input('id'))->first()->name);
-                    User::destroy(Request::input('id'));
-                    return Redirect::back()->with('msg', 'Пользователь удален');
-                } else if (Request::input('id') == 1) {
-
-                    return Redirect::back()->with('msg', 'Нельзя удалить супер администратора');
-                } else {
-
-                    return Redirect::back()->with('msg', 'Ошибка удаления пользователя');
-                }
-
-                break;
-
-            case 'edit':
-
-                if (!empty(Request::input('id')) && !empty(Request::input('name')) && !empty(Request::input('login')) && !empty(Request::input('email'))) {
-
-                    User::Edit(Request::input('id'), Request::input('name'), Request::input('login'), Request::input('email'), Request::input('password'));
-                    Log::write('Изменил данные пользователя ' . Request::input('name'));
-
-                    return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
-                } else {
-
-
-                    return Redirect::back()->with('msg', 'Поля Имя, Login и email не должны быть пустыми');
-                }
-
-                break;
-
-            case 'add':
-
-
-                if (!empty(Request::input('name')) && !empty(Request::input('login')) && !empty(Request::input('email')) && !empty(Request::input('password'))) {
-
-
-                    User::firstOrCreate(array('name' => Request::input('name'), 'login' => Request::input('login'), 'email' => Request::input('email'), 'password' => md5(Request::input('password'))));
-                    Log::write('Добавил пользователя ' . Request::input('name'));
-                    return Redirect::back()->with('msg', 'Пользователь успешно добавлен');
-                } else {
-
-                    return Redirect::back()->with('msg', 'Все поля обязательны для заполнения');
-                }
-
-                break;
-        }
-    }
-
     public function showAnswerPage()
     {
 
