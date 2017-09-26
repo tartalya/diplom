@@ -118,10 +118,22 @@
             <td>
 
                 <input type="hidden" name="id" value="{{$value->id}}">
-                <input type="submit" name="action" value="edit">
-                <input type="submit" name="action" value="delete">
-            </td>
+                {{ method_field('PUT') }}
+                <input type="submit" name="action" value="Изменить">
+                
+                </form>
+                
+        <form method="POST" value="{{$value->id}}">
+
+            {{ method_field('DELETE') }}  
+
+            <input type="hidden" name="id" value="{{$value->id}}">
+            <input type="submit" name="action" value="Удалить">
         </form>
+                
+                
+            </td>
+        
         </tr>
         @endforeach
 

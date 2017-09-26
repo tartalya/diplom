@@ -18,21 +18,22 @@ Route::get('/login', 'UserController@showLoginForm')->name('login');
 Route::post('/login', 'UserController@auth');
 
 Route::get('/admin', 'AdminController@showAdminPanel')->name('admin');
-//Route::get('/admin/users', 'AdminController@manageUsers')->name('manageUsers');
-//Route::post('/admin/users', 'AdminController@editUser');
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/ask', 'FaqController@showAskForm')->name('ask');
 Route::post('/ask', 'FaqController@ask');
 
 Route::get('/admin/answer/add', 'AdminController@showAnswerPage')->name('answer');
-Route::post('/admin/answer/add', 'AdminController@manageAnswer');
+Route::put('/admin/answer/add', 'AdminController@editAnswer');
+Route::delete('/admin/answer/add', 'AdminController@deleteAnswer');
 
 Route::get('/admin/answer/hided', 'AdminController@showHidedPage')->name('hided');
-Route::post('/admin/answer/hided', 'AdminController@manageAnswer');
+Route::put('/admin/answer/hided', 'AdminController@editAnswer');
+Route::delete('/admin/answer/hided', 'AdminController@deleteAnswer');
 
 
 Route::get('/admin/answer/manage', 'AdminController@showManagePage')->name('manage');
-Route::post('/admin/answer/manage', 'AdminController@manageAnswer');
+Route::put('/admin/answer/manage', 'AdminController@editAnswer');
+Route::delete('/admin/answer/manage', 'AdminController@deleteAnswer');
 
 Route::get('/admin/answer/category', 'AdminController@showAnswerByCategory');
 Route::post('/admin/answer/category', 'AdminController@showAnswerByPostedCategory');
@@ -41,3 +42,4 @@ Route::get('/admin/categories', 'AdminController@showCategoriesPage')->name('cat
 Route::post('/admin/categories', 'CategoryController@manageCategories');
 
 Route::resource('/admin/users', 'UserBetterController');
+

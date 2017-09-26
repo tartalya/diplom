@@ -74,46 +74,40 @@ class AdminController extends Controller
                 ->withDescription('Список всех вопросов');
     }
 
-    public function manageAnswer()
+    public function editAnswer()
     {
 
-        switch (Request::input('action')) {
+        if (!empty(Request::input('category')) && !empty(Request::input('status')) &&
+            !empty(Request::input('questioner_name')) && !empty(Request::input('questioner_email')) &&
+            !empty(Request::input('question')) &&
+            !empty(Request::input('id'))) {
 
-            case 'edit':
+            Faq::where('id', Request::input('id'))->update(array('category_id' => Request::input('category'),
+                'status_id' => Request::input('status'),
+                'questioner_name' => Request::input('questioner_name'),
+                'questioner_email' => Request::input('questioner_email'),
+                'question' => Request::input('question'),
+                'answer' => Request::input('answer')
+            ));
+            Log::write('Обновил вопрос номер ' . Request::input('id'));
+            return Redirect::back()->with('msg', 'Вопрос успешно обновлен');
+        } else {
 
-                if (!empty(Request::input('category')) && !empty(Request::input('status')) &&
-                    !empty(Request::input('questioner_name')) && !empty(Request::input('questioner_email')) &&
-                    !empty(Request::input('question')) && !empty(Request::input('answer')) &&
-                    !empty(Request::input('id'))) {
+            return Redirect::back()->with('msg', 'Ошибка обновления данных в editAnswer()');
+        }
+    }
 
-                    Faq::where('id', Request::input('id'))->update(array('category_id' => Request::input('category'),
-                        'status_id' => Request::input('status'),
-                        'questioner_name' => Request::input('questioner_name'),
-                        'questioner_email' => Request::input('questioner_email'),
-                        'question' => Request::input('question'),
-                        'answer' => Request::input('answer')
-                    ));
-                    Log::write('Обновил вопрос номер ' . Request::input('id'));
-                    return Redirect::back()->with('msg', 'Вопрос успешно обновлен');
-                } else {
+    public function deleteAnswer()
+    {
 
-                    return Redirect::back()->with('msg', 'Ошибка обновления данных');
-                }
-                break;
+        if (!empty(Request::input('id'))) {
 
-            case 'delete':
+            Faq::where('id', Request::input('id'))->delete();
+            Log::write('Удалил вопрос номер ' . Request::input('id'));
+            return Redirect::back()->with('msg', 'Ворпос успешно удален');
+        } else {
 
-                if (!empty(Request::input('id'))) {
-
-                    Faq::where('id', Request::input('id'))->delete();
-                    Log::write('Удалил вопрос номер ' . Request::input('id'));
-                    return Redirect::back()->with('msg', 'Ворпос успешно удален');
-                } else {
-
-                    return Redirect::back()->with('msg', 'Ошибка удаления вопроса');
-                }
-
-                break;
+            return Redirect::back()->with('msg', 'Ошибка удаления вопроса');
         }
     }
 
