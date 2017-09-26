@@ -6,7 +6,7 @@ use App\User;
 use Redirect;
 use App\Log;
 
-class UserBetterController extends Controller
+class UserResourceController extends Controller
 {
 
     public function __construct()

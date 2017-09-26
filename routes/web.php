@@ -41,5 +41,5 @@ Route::post('/admin/answer/category', 'AdminController@showAnswerByPostedCategor
 Route::get('/admin/categories', 'AdminController@showCategoriesPage')->name('categories');
 Route::post('/admin/categories', 'CategoryController@manageCategories');
 
-Route::resource('/admin/users', 'UserBetterController');
+Route::resource('/admin/users', 'UserResourceController');
 
