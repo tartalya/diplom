@@ -34,7 +34,7 @@ class AdminController extends Controller
     }
 
     public function showAdminPanel()
-    {
+    {       
         $lastQuestion = Faq::orderBy('id', 'DESC')->take(15)->get();
 
         return view('admin.main')->withContent(self::getBaseInfo())->withlastQuestions($lastQuestion);

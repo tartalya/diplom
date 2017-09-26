@@ -28,9 +28,13 @@
         </thead>
         <tbody>
 
-        <form name="category" method="POST"> 
+
 
             @foreach ($categories as $category)
+
+
+        <form method="POST"> 
+
             <tr>
 
                 <td>{{$category->id}}</td>
@@ -46,16 +50,28 @@
                 <td>{{\App\Faq::where('category_id', $category->id)->where('status_id', 3)->count()}}</td>
                 <td>{{\App\Faq::where('category_id', $category->id)->where('status_id', 1)->count()}}</td>
 
-                <td><input type="hidden" name="category_id" value="{{$category->id}}"></td>
-                <td><input type="submit" name="action" value="edit"></td>
-                <td><input type="submit" name="action" value="delete"></td>
+                <td>
 
-            </tr>
-
-            @endforeach
-
+                    {{ method_field('PUT') }}
+                    <input type="hidden" name="category_id" value="{{$category->id}}">
+                    <input type="submit" name="action" value="Изменить">
 
         </form>
+
+        <form method="POST">
+
+            {{ method_field('DELETE') }}  
+
+            <input type="hidden" name="category_id" value="{{$category->id}}">
+            <input type="submit" name="action" value="Удалить">
+        </form>
+
+        </td>
+
+        </tr>
+
+        @endforeach
+
 
         </tbody>
     </table>
