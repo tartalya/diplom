@@ -107,15 +107,20 @@ class UserResourceController extends Controller
     public function update(Request $request, $id)
     {
 
-        if (!empty($request->id) && !empty($request->name) && !empty($request->login) && !empty($request->email)) {
+        if (!empty($request->id) && !empty($request->name) && !empty($request->login) && !empty($request->email) && !empty($request->password)) {
 
-            User::Edit($request->id, $request->name, $request->login, $request->email, $request->password);
+            User::where('id', $request->id)->update(array('name' => $request->name,
+                'login' => $request->login, 'email' => $request->email,
+                'password' => md5($request->password)));
             Log::write('Изменил данные пользователя ' . $request->name);
+            return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
+        } else if (!empty($request->id) && !empty($request->name) && !empty($request->login) && !empty($request->email)) {
 
+            User::where('id', $request->id)->update(array('name' => $request->name,
+                'login' => $request->login, 'email' => $request->email));
+            Log::write('Изменил данные пользователя ' . $request->name);
             return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
         } else {
-
-
             return Redirect::back()->with('msg', 'Поля Имя, Login и email не должны быть пустыми');
         }
     }
