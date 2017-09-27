@@ -22,14 +22,12 @@ class FaqController extends Controller
 
         if (!empty(Request::input('name')) && !empty(Request::input('email')) && !empty(Request::input('question')) && !empty(Request::input('category'))) {
 
-
-
-            if ($result = Faq::create(array('questioner_name' => Request::input('name'),
+            if (Faq::create(array('questioner_name' => Request::input('name'),
                     'questioner_email' => Request::input('email'),
                     'question' => Request::input('question'),
                     'category_id' => Request::input('category')))) {
 
-                return view('askok')->withMsg($result);
+                return view('askok');
             } else {
 
 
