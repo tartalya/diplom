@@ -1,15 +1,15 @@
 <?php
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Log extends Model
+class Log
 {
 
-    private static $logFile = __DIR__ . '/../storage/logs/admin.log';
+    private static $logFile;
 
     public static function write($string)
     {
+
+        self::$logFile = storage_path() . '/logs/admin.log';
 
         if ($string) {
             $output = date("Y-m-d H:i:s") . ' ' . $_SESSION['name'] . ' ' . $string . "\r\n";

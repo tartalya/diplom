@@ -1,5 +1,4 @@
 <?php
-
 /*
   |--------------------------------------------------------------------------
   | Web Routes
@@ -23,17 +22,10 @@ Route::get('/ask', 'FaqController@showAskForm')->name('ask');
 Route::post('/ask', 'FaqController@ask');
 
 Route::get('/admin/answer/add', 'AdminController@showAnswerPage')->name('answer');
-Route::put('/admin/answer/add', 'AdminController@editAnswer');
-Route::delete('/admin/answer/add', 'AdminController@deleteAnswer');
 
 Route::get('/admin/answer/hided', 'AdminController@showHidedPage')->name('hided');
-Route::put('/admin/answer/hided', 'AdminController@editAnswer');
-Route::delete('/admin/answer/hided', 'AdminController@deleteAnswer');
-
 
 Route::get('/admin/answer/manage', 'AdminController@showManagePage')->name('manage');
-Route::put('/admin/answer/manage', 'AdminController@editAnswer');
-Route::delete('/admin/answer/manage', 'AdminController@deleteAnswer');
 
 Route::get('/admin/answer/category', 'AdminController@showAnswerByCategory');
 Route::post('/admin/answer/category', 'AdminController@showAnswerByPostedCategory');
@@ -46,3 +38,6 @@ Route::delete('/admin/categories', 'CategoryController@deleteCategory');
 
 Route::resource('/admin/users', 'UserResourceController');
 
+
+Route::put('/admin/answer/{name}', 'AdminController@editAnswer')->where('name', '[A-Za-z]+');
+Route::delete('/admin/answer/{name}', 'AdminController@deleteAnswer')->where('name', '[A-Za-z]+');
