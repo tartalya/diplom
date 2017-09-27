@@ -39,5 +39,8 @@ Route::delete('/admin/categories', 'CategoryController@deleteCategory');
 Route::resource('/admin/users', 'UserResourceController');
 
 
-Route::put('/admin/answer/{name}', 'AdminController@editAnswer')->where('name', '[A-Za-z]+');
-Route::delete('/admin/answer/{name}', 'AdminController@deleteAnswer')->where('name', '[A-Za-z]+');
+//Route::put('/admin/answer/{name}', 'AdminController@editAnswer')->where('name', '[A-Za-z]+');
+//Route::delete('/admin/answer/{name}', 'AdminController@deleteAnswer')->where('name', '[A-Za-z]+');
+
+Route::put('/admin/answer', 'AdminController@editAnswer');
+Route::delete('/admin/answer', 'AdminController@deleteAnswer');

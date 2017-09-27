@@ -1,10 +1,12 @@
 <?php
 namespace App;
 
-class Log
+
+class Log 
 {
 
     private static $logFile;
+
 
     public static function write($string)
     {

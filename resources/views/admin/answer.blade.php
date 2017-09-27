@@ -35,7 +35,7 @@
     
      @foreach ($questions as $value)
             <tr>
-        <form name="answer_edit" method="POST">
+        <form name="answer_edit" method="POST" action="/admin/answer">
             <td>
                 {{$value->id}}
             </td>
@@ -123,7 +123,7 @@
                 
                 </form>
                 
-        <form method="POST" value="{{$value->id}}">
+        <form method="POST" value="{{$value->id}}" action="/admin/answer">
 
             {{ method_field('DELETE') }}  
 
