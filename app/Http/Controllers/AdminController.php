@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use Request;
+use \Illuminate\Http\Request;
 use Redirect;
 use App\Faq;
 use App\Category;
@@ -9,13 +9,14 @@ use App\User;
 use App\Status;
 use App\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
 
     public static function getBaseInfo()
     {
-        $content['admin_name'] = Auth::user()->name; 
+        $content['admin_name'] = Auth::user()->name;
         $content['admin_count'] = User::all()->count();
         $content['qa_count'] = Faq::all()->count();
         $content['categories_count'] = Category::all()->count();
@@ -25,7 +26,7 @@ class AdminController extends Controller
     }
 
     public function showAdminPanel()
-    {       
+    {
         $lastQuestion = Faq::orderBy('id', 'DESC')->take(15)->get();
 
         return view('admin.main')->withContent(self::getBaseInfo())->withlastQuestions($lastQuestion);
@@ -65,22 +66,37 @@ class AdminController extends Controller
                 ->withDescription('Список всех вопросов');
     }
 
-    public function editAnswer()
+    public function editAnswer(Request $request)
     {
+        /*
+          $answer = $request->validate([
+          'category' => 'required|numeric',
+          'status' => 'required|numeric',
+          'questioner_name' => 'required',
+          'questioner_email' => 'required',
+          'question' => 'required',
+          'id' => 'required'
+          ]);
+         * 
+         */
 
-        if (!empty(Request::input('category')) && !empty(Request::input('status')) &&
-            !empty(Request::input('questioner_name')) && !empty(Request::input('questioner_email')) &&
-            !empty(Request::input('question')) &&
-            !empty(Request::input('id'))) {
+        $answer = $request->all();
 
-            Faq::where('id', Request::input('id'))->update(array('category_id' => Request::input('category'),
-                'status_id' => Request::input('status'),
-                'questioner_name' => Request::input('questioner_name'),
-                'questioner_email' => Request::input('questioner_email'),
-                'question' => Request::input('question'),
-                'answer' => Request::input('answer')
-            ));
-            Log::write('Обновил вопрос номер ' . Request::input('id'));
+        if ($answer) {
+
+
+            $faq = Faq::find($answer['id']);
+
+            $faq->category_id = $answer['category_id'];
+            $faq->status_id = $answer['status_id'];
+            $faq->questioner_name = $answer['questioner_name'];
+            $faq->questioner_email = $answer['questioner_email'];
+            $faq->question = $answer['question'];
+            $faq->answer = $answer['answer'];
+
+            $faq->save();
+
+            Log::write('Обновил вопрос номер ' . $request->input('id'));
             return Redirect::back()->with('msg', 'Вопрос успешно обновлен');
         } else {
 
@@ -88,13 +104,13 @@ class AdminController extends Controller
         }
     }
 
-    public function deleteAnswer()
+    public function deleteAnswer(Request $request)
     {
 
-        if (!empty(Request::input('id'))) {
+        if (!empty($request->input('id'))) {
 
-            Faq::where('id', Request::input('id'))->delete();
-            Log::write('Удалил вопрос номер ' . Request::input('id'));
+            Faq::where('id', $request->input('id'))->delete();
+            Log::write('Удалил вопрос номер ' . $request->input('id'));
             return Redirect::back()->with('msg', 'Ворпос успешно удален');
         } else {
 
@@ -124,12 +140,12 @@ class AdminController extends Controller
                 ->withDescription('Список вопросов в категории');
     }
 
-    public static function showAnswerByPostedCategory()
+    public static function showAnswerByPostedCategory(Request $request)
     {
 
-        if (!empty(Request::input('category_id'))) {
+        if (!empty($request->input('category_id'))) {
 
-            $category_id = Request::input('category_id');
+            $category_id = $request->input('category_id');
 
             return view('admin.list')->withContent(self::getBaseInfo())
                     ->withQuestions(Faq::all())

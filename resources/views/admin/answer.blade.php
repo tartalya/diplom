@@ -49,7 +49,7 @@
             <td>
                 
                 
-            <select name="category">
+            <select name="category_id">
                 
                     
                 @foreach ($categories as $category)
@@ -75,7 +75,7 @@
             
             <td>
                 
-                <select name="status">
+                <select name="status_id">
                 
                     
                 @foreach ($statuses as $status)
