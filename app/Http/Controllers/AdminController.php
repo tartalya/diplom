@@ -28,7 +28,7 @@ class AdminController extends Controller
         $content['admin_count'] = User::all()->count();
         $content['qa_count'] = Faq::all()->count();
         $content['categories_count'] = Category::all()->count();
-        $content['not_answered_count'] = Faq::where('status_id', 1)->count();
+        $content['not_answered_count'] = Faq::where('status_id', 1)->orWhere('answer', NULL)->count();
 
         return $content;
     }
@@ -43,7 +43,7 @@ class AdminController extends Controller
     public function showAnswerPage()
     {
 
-        $questions = Faq::where('status_id', 1)->get();
+        $questions = Faq::where('status_id', 1)->orWhere('answer', NULL)->get();
 
         return view('admin.answer')->withContent(self::getBaseInfo())
                 ->withQuestions($questions)
