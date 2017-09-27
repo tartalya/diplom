@@ -1,6 +1,7 @@
 <?php
 namespace App;
 
+use Illuminate\Support\Facades\Auth;
 
 class Log 
 {
@@ -14,7 +15,7 @@ class Log
         self::$logFile = storage_path() . '/logs/admin.log';
 
         if ($string) {
-            $output = date("Y-m-d H:i:s") . ' ' . $_SESSION['name'] . ' ' . $string . "\r\n";
+            $output = date("Y-m-d H:i:s") . ' ' . Auth::User()->name . ' ' . $string . "\r\n";
             file_put_contents(self::$logFile, $output, FILE_APPEND);
         } else {
             return false;

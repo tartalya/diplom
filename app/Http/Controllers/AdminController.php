@@ -8,23 +8,14 @@ use App\Category;
 use App\User;
 use App\Status;
 use App\Log;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
 
-    public function __construct()
-    {
-        session_start();
-
-        if (!isset($_SESSION['name'])) {
-
-            Redirect::to('login')->send();
-        }
-    }
-
     public static function getBaseInfo()
     {
-        $content['admin_name'] = $_SESSION['name'];
+        $content['admin_name'] = Auth::user()->name; 
         $content['admin_count'] = User::all()->count();
         $content['qa_count'] = Faq::all()->count();
         $content['categories_count'] = Category::all()->count();

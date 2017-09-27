@@ -9,16 +9,6 @@ use App\Log;
 class UserResourceController extends Controller
 {
 
-    public function __construct()
-    {
-        session_start();
-
-        if (!isset($_SESSION['name'])) {
-
-            Redirect::to('login')->send();
-        }
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +43,7 @@ class UserResourceController extends Controller
             User::firstOrCreate(array('name' => $request->name,
                 'login' => $request->login,
                 'email' => $request->email,
-                'password' => md5($request->password)));
+                'password' => password_hash($request->password, PASSWORD_DEFAULT)));
             Log::write('Добавил пользователя ' . $request->name);
             return Redirect::back()->with('msg', 'Пользователь успешно добавлен');
         } else {
@@ -111,7 +101,7 @@ class UserResourceController extends Controller
 
             User::where('id', $request->id)->update(array('name' => $request->name,
                 'login' => $request->login, 'email' => $request->email,
-                'password' => md5($request->password)));
+                'password' => password_hash($request->password, PASSWORD_DEFAULT)));
             Log::write('Изменил данные пользователя ' . $request->name);
             return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
         } else if (!empty($request->id) && !empty($request->name) && !empty($request->login) && !empty($request->email)) {
