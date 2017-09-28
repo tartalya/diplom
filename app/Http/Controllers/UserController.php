@@ -17,7 +17,7 @@ class UserController extends Controller
 
         if (!empty(Request::input('login')) && !empty(Request::input('password'))) {
 
-            $result = Auth::attempt(['login' => Request::input('login'), 'password' => Request::input('password')], 33600);
+            $result = Auth::attempt(['login' => Request::input('login'), 'password' => Request::input('password')], 1);
 
             if ($result) {
 
