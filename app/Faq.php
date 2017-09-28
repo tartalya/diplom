@@ -1,6 +1,4 @@
 <?php
-namespace App\Http\Controllers;
-
 namespace App;
 
 use Illuminate\Support\Facades\DB;

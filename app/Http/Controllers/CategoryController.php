@@ -25,8 +25,10 @@ class CategoryController extends Controller
     {
 
         if (Request::input('category_id') && Request::input('category_name')) {
-            Category::where('id', Request::input('category_id'))->update(array('category_name' => Request::input('category_name')));
-            Log::write('Отредактировал категорию ' . Request::input('category_id') . ' новое название категории ' . Request::input('category_name'));
+            Category::where('id', Request::input('category_id'))
+                ->update(array('category_name' => Request::input('category_name')));
+            Log::write('Отредактировал категорию ' . Request::input('category_id')
+                . ' новое название категории ' . Request::input('category_name'));
             return Redirect::back()->with('msg', 'Категория успешно изменена');
         } else {
             return Redirect::back()->with('msg', 'Ошибка переименования категории');
@@ -49,10 +51,8 @@ class CategoryController extends Controller
     {
 
         if (!empty($id)) {
-
             return Category::where('id', $id)->first()->category_name;
         } else {
-
             return '';
         }
     }

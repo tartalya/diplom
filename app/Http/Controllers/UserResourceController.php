@@ -26,7 +26,7 @@ class UserResourceController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -37,9 +37,8 @@ class UserResourceController extends Controller
      */
     public function store(Request $request)
     {
-
-        if (!empty($request->name) && !empty($request->login) && !empty($request->email) && !empty($request->password)) {
-
+        if (!empty($request->name) && !empty($request->login) &&
+            !empty($request->email) && !empty($request->password)) {
             User::firstOrCreate(array('name' => $request->name,
                 'login' => $request->login,
                 'email' => $request->email,
@@ -47,7 +46,6 @@ class UserResourceController extends Controller
             Log::write('Добавил пользователя ' . $request->name);
             return Redirect::back()->with('msg', 'Пользователь успешно добавлен');
         } else {
-
             return Redirect::back()->with('msg', 'Все поля обязательны для заполнения');
         }
     }
@@ -61,10 +59,9 @@ class UserResourceController extends Controller
     public function show($id)
     {
         if (User::find($id)) {
-
-            return view('admin.edit')->withContent(AdminController::getBaseInfo())->withUsers(User::where('id', $id)->get());
+            return view('admin.edit')->withContent(AdminController::getBaseInfo())
+                    ->withUsers(User::where('id', $id)->get());
         } else {
-
             return Redirect::back()->with('msg', 'Такого пользователя не существует');
         }
     }
@@ -77,12 +74,10 @@ class UserResourceController extends Controller
      */
     public function edit($id)
     {
-
         if (User::find($id)) {
-
-            return view('admin.edit')->withContent(AdminController::getBaseInfo())->withUsers(User::where('id', $id)->get());
+            return view('admin.edit')->withContent(AdminController::getBaseInfo())
+                    ->withUsers(User::where('id', $id)->get());
         } else {
-
             return Redirect::back()->with('msg', 'Такого пользователя не существует');
         }
     }
@@ -96,16 +91,15 @@ class UserResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        if (!empty($request->id) && !empty($request->name) && !empty($request->login) && !empty($request->email) && !empty($request->password)) {
-
+        if (!empty($request->id) && !empty($request->name) && !empty($request->login) &&
+            !empty($request->email) && !empty($request->password)) {
             User::where('id', $request->id)->update(array('name' => $request->name,
                 'login' => $request->login, 'email' => $request->email,
                 'password' => password_hash($request->password, PASSWORD_DEFAULT)));
             Log::write('Изменил данные пользователя ' . $request->name);
             return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
-        } else if (!empty($request->id) && !empty($request->name) && !empty($request->login) && !empty($request->email)) {
-
+        } elseif (!empty($request->id) && !empty($request->name) &&
+            !empty($request->login) && !empty($request->email)) {
             User::where('id', $request->id)->update(array('name' => $request->name,
                 'login' => $request->login, 'email' => $request->email));
             Log::write('Изменил данные пользователя ' . $request->name);
@@ -124,15 +118,12 @@ class UserResourceController extends Controller
     public function destroy($id)
     {
         if (!empty($id) && $id != 1) {
-
             Log::write('Удалил пользователя ' . User::where('id', $id)->first()->name);
             User::destroy($id);
             return Redirect::back()->with('msg', 'Пользователь удален');
-        } else if ($id == 1) {
-
+        } elseif ($id === 1) {
             return Redirect::back()->with('msg', 'Нельзя удалить супер администратора');
         } else {
-
             return Redirect::back()->with('msg', 'Ошибка удаления пользователя');
         }
     }

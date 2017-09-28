@@ -16,18 +16,14 @@ class UserController extends Controller
     {
 
         if (!empty(Request::input('login')) && !empty(Request::input('password'))) {
-
             $result = Auth::attempt(['login' => Request::input('login'), 'password' => Request::input('password')], 1);
 
             if ($result) {
-
                 return redirect()->route('admin');
             } else {
-
                 return view('auth.login')->withMsg('Ошибка авторизации');
             }
         } else {
-
             return view('auth.login')->withMsg('Нужно заполнить все поля');
         }
     }

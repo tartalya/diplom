@@ -3,11 +3,9 @@ namespace App;
 
 use Illuminate\Support\Facades\Auth;
 
-class Log 
+class Log
 {
-
     private static $logFile;
-
 
     public static function write($string)
     {

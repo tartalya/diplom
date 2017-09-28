@@ -20,7 +20,7 @@ class AdminController extends Controller
         $content['admin_count'] = User::all()->count();
         $content['qa_count'] = Faq::all()->count();
         $content['categories_count'] = Category::all()->count();
-        $content['not_answered_count'] = Faq::where('status_id', 1)->orWhere('answer', NULL)->count();
+        $content['not_answered_count'] = Faq::where('status_id', 1)->orWhere('answer', null)->count();
 
         return $content;
     }
@@ -35,7 +35,7 @@ class AdminController extends Controller
     public function showAnswerPage()
     {
 
-        $questions = Faq::where('status_id', 1)->orWhere('answer', NULL)->get();
+        $questions = Faq::where('status_id', 1)->orWhere('answer', null)->get();
 
         return view('admin.answer')->withContent(self::getBaseInfo())
                 ->withQuestions($questions)
@@ -83,44 +83,34 @@ class AdminController extends Controller
         $answer = $request->all();
 
         if ($answer) {
-
-
             $faq = Faq::find($answer['id']);
-
             $faq->category_id = $answer['category_id'];
             $faq->status_id = $answer['status_id'];
             $faq->questioner_name = $answer['questioner_name'];
             $faq->questioner_email = $answer['questioner_email'];
             $faq->question = $answer['question'];
             $faq->answer = $answer['answer'];
-
             $faq->save();
-
             Log::write('Обновил вопрос номер ' . $request->input('id'));
             return Redirect::back()->with('msg', 'Вопрос успешно обновлен');
         } else {
-
             return Redirect::back()->with('msg', 'Ошибка обновления данных в editAnswer()');
         }
     }
 
     public function deleteAnswer(Request $request)
     {
-
         if (!empty($request->input('id'))) {
-
             Faq::where('id', $request->input('id'))->delete();
             Log::write('Удалил вопрос номер ' . $request->input('id'));
             return Redirect::back()->with('msg', 'Ворпос успешно удален');
         } else {
-
             return Redirect::back()->with('msg', 'Ошибка удаления вопроса');
         }
     }
 
     public function showCategoriesPage()
     {
-
         return view('admin.categories')->withContent(self::getBaseInfo())
                 ->withCategories(Category::all())
                 ->withDescription('Управление категориями');
@@ -128,9 +118,7 @@ class AdminController extends Controller
 
     public static function showAnswerByCategory()
     {
-
         $category_id = Category::all()->first()->id;
-
 
         return view('admin.list')->withContent(self::getBaseInfo())
                 ->withQuestions(Faq::all())
@@ -144,9 +132,7 @@ class AdminController extends Controller
     {
 
         if (!empty($request->input('category_id'))) {
-
             $category_id = $request->input('category_id');
-
             return view('admin.list')->withContent(self::getBaseInfo())
                     ->withQuestions(Faq::all())
                     ->withCategories(Category::all())

@@ -20,21 +20,17 @@ class FaqController extends Controller
 
         $categories = Category::all();
 
-        if (!empty(Request::input('name')) && !empty(Request::input('email')) && !empty(Request::input('question')) && !empty(Request::input('category'))) {
-
+        if (!empty(Request::input('name')) && !empty(Request::input('email')) &&
+            !empty(Request::input('question')) && !empty(Request::input('category'))) {
             if (Faq::create(array('questioner_name' => Request::input('name'),
                     'questioner_email' => Request::input('email'),
                     'question' => Request::input('question'),
                     'category_id' => Request::input('category')))) {
-
                 return view('askok');
             } else {
-
-
                 return view('ask')->withCategories($categories)->withMsg('Ошибка добавление вопроса в базу');
             }
         } else {
-
             return view('ask')->withCategories($categories)->withMsg('Все поля обязательны для заполнения');
         }
     }
