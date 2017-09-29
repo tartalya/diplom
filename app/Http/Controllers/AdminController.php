@@ -9,7 +9,6 @@ use App\User;
 use App\Status;
 use App\Log;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -68,33 +67,17 @@ class AdminController extends Controller
 
     public function editAnswer(Request $request)
     {
-        /*
-          $answer = $request->validate([
-          'category' => 'required|numeric',
-          'status' => 'required|numeric',
-          'questioner_name' => 'required',
-          'questioner_email' => 'required',
-          'question' => 'required',
-          'id' => 'required'
-          ]);
-         * 
-         */
-
-        $answer = $request->all();
-
-        if ($answer) {
-            $faq = Faq::find($answer['id']);
-            $faq->category_id = $answer['category_id'];
-            $faq->status_id = $answer['status_id'];
-            $faq->questioner_name = $answer['questioner_name'];
-            $faq->questioner_email = $answer['questioner_email'];
-            $faq->question = $answer['question'];
-            $faq->answer = $answer['answer'];
+        if ($request->validate(array('*' => 'required'))) {
+            $faq = Faq::find($request->id);
+            $faq->category_id = $request->category_id;
+            $faq->status_id = $request->status_id;
+            $faq->questioner_name = $request->questioner_name;
+            $faq->questioner_email = $request->questioner_email;
+            $faq->question = $request->question;
+            $faq->answer = $request->answer;
             $faq->save();
-            Log::write('Обновил вопрос номер ' . $request->input('id'));
+            Log::write('Обновил вопрос номер ' . $request->id);
             return Redirect::back()->with('msg', 'Вопрос успешно обновлен');
-        } else {
-            return Redirect::back()->with('msg', 'Ошибка обновления данных в editAnswer()');
         }
     }
 

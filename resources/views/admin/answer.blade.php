@@ -6,7 +6,15 @@
 <div class="table-responsive">
 
 
-
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>Все поля должны быть заполнены</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 
     <Center><h1><font color="red"><div class="message" id="message">
