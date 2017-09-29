@@ -59,6 +59,7 @@
                 <input type="hidden" name="id" value="{{$value->id}}">
                 <input type="submit" name="action" value="Изменить">   
                 {{ method_field('PUT') }}
+                {{ csrf_field() }}
 
 
             
@@ -68,6 +69,7 @@
         <form method="POST" action="{{route('user.update', ['id' => $value->id], false)}}">
 
             {{ method_field('DELETE') }}  
+            {{ csrf_field() }}
 
             <input type="hidden" name="id" value="{{$value->id}}">
             <input type="submit" name="action" value="Удалить">
@@ -99,7 +101,7 @@
 
 <div class="table-responsive">
 
-    <form name="user_add" method="POST" action="{{route('user.store', false)}}">    
+    <form name="user_add" method="POST" action="{{route('user.store')}}">    
 
         <table class="table table-striped">
 
@@ -128,6 +130,7 @@
                     <input type="password" name="password">
                 </td>
                 <td>
+                    {{ csrf_field() }}
                     <input type="submit" name="action" value="Создать">
                 </td>
 

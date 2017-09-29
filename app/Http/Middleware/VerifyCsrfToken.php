@@ -13,19 +13,19 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        '/login',
-        '/auth',
-        '/ask',
-        '/admin',
-        '/admin/users',
-        '/admin/users/{id}/edit',
-        '/admin/users/{id}',
-        '/admin/users/*',
-        '/admin/answer/add',
-        '/admin/answer',
-        '/admin/answer/manage',
-        '/admin/categories',
-        '/admin/answer/category',
-        '/admin/answer/hided'
+       '/login',
+       '/auth',
+       '/ask',
+       '/admin',
+       '/admin/users',
+       '/admin/users/{id}/edit',
+       '/admin/users/{id}',
+       '/admin/users/*',
+       '/admin/answer/add',
+       '/admin/answer',
+       '/admin/answer/manage',
+       '/admin/categories',
+       '/admin/answer/category',
+       '/admin/answer/hided'
     ];
 }

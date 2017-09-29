@@ -53,6 +53,7 @@
                 <td>
 
                     {{ method_field('PUT') }}
+                    {{ csrf_field() }}
                     <input type="hidden" name="category_id" value="{{$category->id}}">
                     <input type="submit" name="action" value="Изменить">
 
@@ -61,6 +62,7 @@
         <form method="POST">
 
             {{ method_field('DELETE') }}  
+            {{ csrf_field() }}
 
             <input type="hidden" name="category_id" value="{{$category->id}}">
             <input type="submit" name="action" value="Удалить">
@@ -106,6 +108,7 @@
                 </td>
 
                 <td>
+                    {{ csrf_field() }}
                     <input type="submit" name="action" value="add">
                 </td>
 

@@ -54,7 +54,7 @@
 			    		<div class="form-group">
 			    			<input class="form-control" placeholder="Пароль" name="password" type="password" value="">
 			    		</div>
-			
+                                        {{ csrf_field() }}
 			    		<input class="btn btn-lg btn-success btn-block" type="submit" name="submit" value="Вход">
 			    	</fieldset>
                                         

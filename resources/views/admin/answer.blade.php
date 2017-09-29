@@ -119,6 +119,7 @@
 
                 <input type="hidden" name="id" value="{{$value->id}}">
                 {{ method_field('PUT') }}
+                {{ csrf_field() }}
                 <input type="submit" name="action" value="Изменить">
                 
                 </form>
@@ -126,6 +127,7 @@
         <form method="POST" value="{{$value->id}}" action="{{route('delete_answer')}}">
 
             {{ method_field('DELETE') }}  
+            {{ csrf_field() }}
 
             <input type="hidden" name="id" value="{{$value->id}}">
             <input type="submit" name="action" value="Удалить">
