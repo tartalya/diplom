@@ -36,9 +36,12 @@ Route::put('/admin/categories', 'CategoryController@editCategory')->middleware('
 Route::delete('/admin/categories', 'CategoryController@deleteCategory')->middleware('auth');
 
 
-Route::resource('/admin/users', 'UserResourceController')->middleware('auth');
+Route::resource('/admin/users', 'UserResourceController', ['names' => ['create' => 'user.create',
+    'update' => 'user.update',
+    'store' => 'user.store'
+    ]])->middleware('auth');
 
 
-Route::put('/admin/answer', 'AdminController@editAnswer')->middleware('auth');
-Route::delete('/admin/answer', 'AdminController@deleteAnswer')->middleware('auth');
+Route::put('/admin/answer', 'AdminController@editAnswer')->name('put_answer')->middleware('auth');
+Route::delete('/admin/answer', 'AdminController@deleteAnswer')->name('delete_answer')->middleware('auth');
 

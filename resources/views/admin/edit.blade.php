@@ -31,7 +31,8 @@
 
             @foreach ($users as $value)
             <tr>
-        <form name="admin_edit" method="POST" action="/admin/users/{{$value->id}}/">
+        <!-- <form name="admin_edit" method="POST" action="/admin/users/{{$value->id}}/"> -->
+        <form name="admin_edit" method="POST" action="{{route('user.update', ['id' => $value->id], false)}}">
             <td>
                 {{$value->id}}
             </td>
@@ -64,7 +65,7 @@
         </form>
 
 
-        <form method="POST" action="/admin/users/{{$value->id}}/">
+        <form method="POST" action="{{route('user.update', ['id' => $value->id], false)}}">
 
             {{ method_field('DELETE') }}  
 
@@ -98,7 +99,7 @@
 
 <div class="table-responsive">
 
-    <form name="user_add" method="POST" action="/admin/users">    
+    <form name="user_add" method="POST" action="{{route('user.store', false)}}">    
 
         <table class="table table-striped">
 
