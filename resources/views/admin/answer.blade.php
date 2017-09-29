@@ -9,9 +9,9 @@
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
-            @foreach ($errors->all() as $error)
+            
                 <li>Все поля должны быть заполнены</li>
-            @endforeach
+            
         </ul>
     </div>
 @endif
