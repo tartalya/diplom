@@ -67,7 +67,7 @@ class AdminController extends Controller
 
     public function editAnswer(Request $request)
     {
-        if ($request->validate(array('*' => 'required'))) {
+        if ($this->validate($request, array('id' => 'required|integer'))) {
             $faq = Faq::find($request->id);
             $faq->category_id = $request->category_id;
             $faq->status_id = $request->status_id;
