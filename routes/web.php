@@ -17,20 +17,20 @@ Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/ask', 'FaqController@showAskForm')->name('ask');
 Route::post('/ask', 'FaqController@ask');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/admin', 'AdminController@showAdminPanel')->name('admin');
-    Route::get('/admin/answer/add', 'AdminController@showAnswerPage')->name('answer');
-    Route::get('/admin/answer/hided', 'AdminController@showHidedPage')->name('hided');
-    Route::get('/admin/answer/manage', 'AdminController@showManagePage')->name('manage');
-    Route::get('/admin/answer/category', 'AdminController@showAnswerByCategory');
-    Route::post('/admin/answer/category', 'AdminController@showAnswerByPostedCategory');
-    Route::get('/admin/categories', 'AdminController@showCategoriesPage')->name('categories');
-    Route::post('/admin/categories', 'CategoryController@addCategory');
-    Route::put('/admin/categories', 'CategoryController@editCategory');
-    Route::delete('/admin/categories', 'CategoryController@deleteCategory');
-    Route::resource('/admin/users', 'UserResourceController', ['names' => ['create' => 'user.create',
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::get('/', 'AdminController@showAdminPanel')->name('admin');
+    Route::get('answer/add', 'AdminController@showAnswerPage')->name('answer');
+    Route::get('answer/hided', 'AdminController@showHidedPage')->name('hided');
+    Route::get('answer/manage', 'AdminController@showManagePage')->name('manage');
+    Route::get('answer/category', 'AdminController@showAnswerByCategory');
+    Route::post('answer/category', 'AdminController@showAnswerByPostedCategory');
+    Route::get('categories', 'AdminController@showCategoriesPage')->name('categories');
+    Route::post('categories', 'CategoryController@addCategory');
+    Route::put('categories', 'CategoryController@editCategory');
+    Route::delete('categories', 'CategoryController@deleteCategory');
+    Route::resource('users', 'UserResourceController', ['names' => ['create' => 'user.create',
             'update' => 'user.update',
             'store' => 'user.store']]);
-    Route::put('/admin/answer', 'AdminController@editAnswer')->name('put_answer');
-    Route::delete('/admin/answer', 'AdminController@deleteAnswer')->name('delete_answer');
+    Route::put('answer', 'AdminController@editAnswer')->name('put_answer');
+    Route::delete('answer', 'AdminController@deleteAnswer')->name('delete_answer');
 });
