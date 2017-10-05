@@ -1,28 +1,13 @@
 <?php
-
-/*
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-
-class User extends Model
-{
-
-    protected $fillable = ['name', 'email', 'login', 'password'];
-
-}
-*/
-
-
-
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Log;
 
 class User extends Authenticatable
 {
+
     use Notifiable;
 
     /**
@@ -42,4 +27,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function update(array $attributes = [], array $options = [])
+    {
+        die();
+        Log::write('Изменил данные пользователя ' . $attributes['name']);
+        parent::update();
+    }
 }

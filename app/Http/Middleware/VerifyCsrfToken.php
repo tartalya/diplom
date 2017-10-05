@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        /*
        '/login',
        '/auth',
        '/ask',
@@ -27,5 +28,7 @@ class VerifyCsrfToken extends Middleware
        '/admin/categories',
        '/admin/answer/category',
        '/admin/answer/hided'
+         * 
+         */
     ];
 }
