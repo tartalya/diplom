@@ -7,7 +7,6 @@ use App\Faq;
 use App\Category;
 use App\User;
 use App\Status;
-use App\Log;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -76,15 +75,13 @@ class AdminController extends Controller
         $faq->question = $request->question;
         $faq->answer = $request->answer;
         $faq->save();
-        Log::write('Обновил вопрос номер ' . $request->id);
         return Redirect::back()->with('msg', 'Вопрос успешно обновлен');
     }
 
     public function deleteAnswer(Request $request)
     {
         if (!empty($request->input('id'))) {
-            Faq::where('id', $request->input('id'))->delete();
-            Log::write('Удалил вопрос номер ' . $request->input('id'));
+            Faq::destroy($request->id);
             return Redirect::back()->with('msg', 'Ворпос успешно удален');
         } else {
             return Redirect::back()->with('msg', 'Ошибка удаления вопроса');

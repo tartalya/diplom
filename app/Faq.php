@@ -1,7 +1,6 @@
 <?php
 namespace App;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Faq extends Model
@@ -19,5 +18,25 @@ class Faq extends Model
     {
 
         return $this->belongsTo('App\Category');
+    }
+
+    public static function destroy($ids)
+    {
+        if (is_array($ids)) {
+            foreach ($ids as $id) {
+                Log::write('Удалил вопрос номер ' . $id);
+            }
+        } else {
+            Log::write('Удалил вопрос номер ' . $ids);
+        }
+        parent::destroy($ids);
+    }
+
+    public function save(array $options = array())
+    {
+        if (isset($this->id)) {
+            Log::write('Обновил вопрос номер ' . $this->id);
+        }
+        parent::save($options);
     }
 }
