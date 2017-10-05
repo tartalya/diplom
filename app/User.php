@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
@@ -46,5 +47,13 @@ class User extends Authenticatable
             Log::write('Удалил пользователя ' . User::where('id', $ids)->first()->name);
         }
         parent::destroy($ids);
+    }
+
+    public function create(array $attributes = [])
+    {
+        if (isset($attributes['name'])) {
+            Log::write('Добавил пользователя ' . $attributes['name']);
+        }
+        parent::create($attributes);
     }
 }

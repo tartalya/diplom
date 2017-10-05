@@ -13,10 +13,10 @@ class Category extends Model
     {
         if (is_array($ids)) {
             foreach ($ids as $id) {
-                Log::write('Удалил категорию ' . $id);
+                Log::write('Удалил категорию ' . $id . ' ' . self::where('id', $id)->first()->category_name);
             }
         } else {
-            Log::write('Удалил категорию ' . $ids);
+            Log::write('Удалил категорию ' . $ids . ' ' . self::where('id', $ids)->first()->category_name);
         }
         parent::destroy($ids);
     }

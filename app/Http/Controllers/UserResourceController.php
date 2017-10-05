@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
 use Redirect;
-use App\Log;
 
 class UserResourceController extends Controller
 {
@@ -32,18 +32,18 @@ class UserResourceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         if (!empty($request->name) && !empty($request->login) &&
             !empty($request->email) && !empty($request->password)) {
-            User::create(array('name' => $request->name,
+            $user = new User();
+            $user->create(array('name' => $request->name,
                 'login' => $request->login,
                 'email' => $request->email,
                 'password' => password_hash($request->password, PASSWORD_DEFAULT)));
-            Log::write('Добавил пользователя ' . $request->name);
             return Redirect::back()->with('msg', 'Пользователь успешно добавлен');
         } else {
             return Redirect::back()->with('msg', 'Все поля обязательны для заполнения');
@@ -53,14 +53,14 @@ class UserResourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         if (User::find($id)) {
             return view('admin.edit')->withContent(AdminController::getBaseInfo())
-                    ->withUsers(User::where('id', $id)->get());
+                ->withUsers(User::where('id', $id)->get());
         } else {
             return Redirect::back()->with('msg', 'Такого пользователя не существует');
         }
@@ -69,14 +69,14 @@ class UserResourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         if (User::find($id)) {
             return view('admin.edit')->withContent(AdminController::getBaseInfo())
-                    ->withUsers(User::where('id', $id)->get());
+                ->withUsers(User::where('id', $id)->get());
         } else {
             return Redirect::back()->with('msg', 'Такого пользователя не существует');
         }
@@ -85,8 +85,8 @@ class UserResourceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -110,7 +110,7 @@ class UserResourceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
