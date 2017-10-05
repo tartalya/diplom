@@ -67,7 +67,7 @@ class AdminController extends Controller
 
     public function editAnswer(Request $request)
     {
-        if ($this->validate($request, array('id' => 'required|integer'))) {
+        $this->validate($request, array('id' => 'required|integer'));
             $faq = Faq::find($request->id);
             $faq->category_id = $request->category_id;
             $faq->status_id = $request->status_id;
@@ -77,8 +77,7 @@ class AdminController extends Controller
             $faq->answer = $request->answer;
             $faq->save();
             Log::write('Обновил вопрос номер ' . $request->id);
-            return Redirect::back()->with('msg', 'Вопрос успешно обновлен');
-        }
+            return Redirect::back()->with('msg', 'Вопрос успешно обновлен');       
     }
 
     public function deleteAnswer(Request $request)
