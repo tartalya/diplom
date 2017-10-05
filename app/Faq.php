@@ -1,8 +1,8 @@
 <?php
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Log;
 
 class Faq extends Model
 {
