@@ -30,8 +30,29 @@ class User extends Authenticatable
 
     public function update(array $attributes = [], array $options = [])
     {
-        die();
-        Log::write('Изменил данные пользователя ' . $attributes['name']);
-        parent::update();
+        if (isset($attributes['name'])) {
+            Log::write('Изменил данные пользователя ' . $attributes['name']);
+        }
+        parent::update($attributes, $options);
+    }
+
+    public static function destroy($ids)
+    {
+        if (is_array($ids)) {
+            foreach ($ids as $id) {
+                Log::write('Удалил пользователя ' . User::where('id', $id)->first()->name);
+            }
+        } else {
+            Log::write('Удалил пользователя ' . User::where('id', $ids)->first()->name);
+        }
+        parent::destroy($ids);
+    }
+
+    public function create(array $attributes = [])
+    {
+        if (isset($attributes['name'])) {
+            Log::write('Добавил пользователя ' . $attributes['name']);
+        }
+        parent::create($attributes);
     }
 }

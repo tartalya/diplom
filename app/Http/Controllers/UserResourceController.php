@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Redirect;
-use App\Log;
 
 class UserResourceController extends Controller
 {
@@ -39,11 +38,10 @@ class UserResourceController extends Controller
     {
         if (!empty($request->name) && !empty($request->login) &&
             !empty($request->email) && !empty($request->password)) {
-            User::firstOrCreate(array('name' => $request->name,
+            User::create(array('name' => $request->name,
                 'login' => $request->login,
                 'email' => $request->email,
                 'password' => password_hash($request->password, PASSWORD_DEFAULT)));
-            Log::write('Добавил пользователя ' . $request->name);
             return Redirect::back()->with('msg', 'Пользователь успешно добавлен');
         } else {
             return Redirect::back()->with('msg', 'Все поля обязательны для заполнения');
@@ -93,16 +91,14 @@ class UserResourceController extends Controller
     {
         if (!empty($request->id) && !empty($request->name) && !empty($request->login) &&
             !empty($request->email) && !empty($request->password)) {
-            User::where('id', $request->id)->update(array('name' => $request->name,
+            User::where('id', $request->id)->first()->update(array('name' => $request->name,
                 'login' => $request->login, 'email' => $request->email,
                 'password' => password_hash($request->password, PASSWORD_DEFAULT)));
-            //Log::write('Изменил данные пользователя ' . $request->name);
             return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
         } elseif (!empty($request->id) && !empty($request->name) &&
             !empty($request->login) && !empty($request->email)) {
-            User::where('id', $request->id)->update(array('name' => $request->name,
+            User::where('id', $request->id)->first()->update(array('name' => $request->name,
                 'login' => $request->login, 'email' => $request->email));
-            //Log::write('Изменил данные пользователя ' . $request->name);
             return Redirect::back()->with('msg', 'Пользовательские данные успешно отредактированы');
         } else {
             return Redirect::back()->with('msg', 'Поля Имя, Login и email не должны быть пустыми');
@@ -118,7 +114,6 @@ class UserResourceController extends Controller
     public function destroy($id)
     {
         if (!empty($id) && $id != 1) {
-            Log::write('Удалил пользователя ' . User::where('id', $id)->first()->name);
             User::destroy($id);
             return Redirect::back()->with('msg', 'Пользователь удален');
         } elseif ($id === 1) {
