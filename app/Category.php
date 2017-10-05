@@ -2,7 +2,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Log;
 
 class Category extends Model
@@ -28,13 +27,5 @@ class Category extends Model
             Log::write('Отредактировал категорию ' . $attributes['category_name']);
         }
         parent::update($attributes, $options);
-    }
-
-    public static function create(array $attributes = [])
-    {
-        
-            Log::write('Добавил категорию ' . $attributes['category_name']);
-        
-        parent::create($attributes);
     }
 }
