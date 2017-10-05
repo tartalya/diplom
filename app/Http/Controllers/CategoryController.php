@@ -1,11 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Request;
 use Redirect;
 use App\Category;
 use App\Faq;
-use App\Log;
 
 class CategoryController extends Controller
 {
@@ -13,8 +13,8 @@ class CategoryController extends Controller
     public function addCategory()
     {
         if (Request::input('category_name')) {
-            Category::create(array('category_name' => Request::input('category_name')));
-            Log::write('Добавил категорию ' . Request::input('category_name'));
+            $category = new Category();
+            $category->create(array('category_name' => Request::input('category_name')));
             return Redirect::back()->with('msg', 'Категория успешно добавлена');
         } else {
             return Redirect::back()->with('msg', 'Ошибка добавления категории');

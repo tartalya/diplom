@@ -1,8 +1,8 @@
 <?php
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Log;
 
 class Category extends Model
 {
@@ -28,4 +28,14 @@ class Category extends Model
         }
         parent::update($attributes, $options);
     }
+
+
+    public function create(array $attributes = [])
+    {
+        if (isset($attributes['category_name'])) {
+            Log::write('Добавил категорию ' . $attributes['category_name']);
+        }
+        parent::create($attributes);
+    }
+
 }
