@@ -25,8 +25,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('answer/category', 'AdminController@showAnswerByCategory');
     Route::post('answer/category', 'AdminController@showAnswerByPostedCategory');
     Route::get('categories', 'AdminController@showCategoriesPage')->name('categories');
-    Route::post('categories', 'CategoryController@addCategory');
-    Route::put('categories', 'CategoryController@editCategory');
+    Route::post('categories/add', 'CategoryController@addCategory')->name('category_add');
+    Route::put('categories/edit', 'CategoryController@editCategory')->name('category_edit');
     Route::delete('categories', 'CategoryController@deleteCategory');
     Route::resource('users', 'UserResourceController', ['names' => ['create' => 'user.create',
             'update' => 'user.update',

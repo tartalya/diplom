@@ -33,7 +33,7 @@
             @foreach ($categories as $category)
 
 
-        <form method="POST"> 
+        <form method="POST" action="{{route('category_edit')}}"> 
 
             <tr>
 
@@ -90,7 +90,7 @@
 
 <div class="table-responsive">
 
-    <form name="category_add" method="POST">    
+    <form name="category_add" method="POST" action="{{route('category_add')}}">    
 
         <table class="table table-striped">
 

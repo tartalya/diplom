@@ -47,12 +47,4 @@ class User extends Authenticatable
         }
         parent::destroy($ids);
     }
-
-    public function create(array $attributes = [])
-    {
-        if (isset($attributes['name'])) {
-            Log::write('Добавил пользователя ' . $attributes['name']);
-        }
-        parent::create($attributes);
-    }
 }

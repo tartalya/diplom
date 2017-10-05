@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Redirect;
+use App\Log;
 
 class UserResourceController extends Controller
 {
@@ -42,6 +43,7 @@ class UserResourceController extends Controller
                 'login' => $request->login,
                 'email' => $request->email,
                 'password' => password_hash($request->password, PASSWORD_DEFAULT)));
+            Log::write('Добавил пользователя ' . $request->name);
             return Redirect::back()->with('msg', 'Пользователь успешно добавлен');
         } else {
             return Redirect::back()->with('msg', 'Все поля обязательны для заполнения');
