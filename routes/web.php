@@ -28,9 +28,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('categories/add', 'CategoryController@addCategory')->name('category_add');
     Route::put('categories/edit', 'CategoryController@editCategory')->name('category_edit');
     Route::delete('categories', 'CategoryController@deleteCategory');
-    Route::resource('users', 'UserResourceController', ['names' => ['create' => 'user.create',
-            'update' => 'user.update',
-            'store' => 'user.store']]);
+    Route::resource('users', 'UserResourceController', ['names' => ['update' => 'user.update',
+        'store' => 'user.store']],
+        ['except' => ['create']]);
     Route::put('answer', 'AdminController@editAnswer')->name('put_answer');
     Route::delete('answer', 'AdminController@deleteAnswer')->name('delete_answer');
 });
