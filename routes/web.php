@@ -22,14 +22,14 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('answer/add', 'AdminController@showAnswerPage')->name('answer');
     Route::get('answer/hided', 'AdminController@showHidedPage')->name('hided');
     Route::get('answer/manage', 'AdminController@showManagePage')->name('manage');
-    Route::get('answer/category', 'AdminController@showAnswerByCategory');
+    Route::get('answer/category', 'AdminController@showAnswerByCategory')->name('showByCategory');
     Route::post('answer/category', 'AdminController@showAnswerByPostedCategory');
     Route::get('categories', 'AdminController@showCategoriesPage')->name('categories');
     Route::post('categories/add', 'CategoryController@addCategory')->name('category_add');
     Route::put('categories/edit', 'CategoryController@editCategory')->name('category_edit');
     Route::delete('categories', 'CategoryController@deleteCategory');
     Route::resource('users', 'UserResourceController', ['names' => ['update' => 'user.update',
-        'store' => 'user.store']],
+        'store' => 'user.store', 'index' => 'user.index']],
         ['except' => ['create']]);
     Route::put('answer', 'AdminController@editAnswer')->name('put_answer');
     Route::delete('answer', 'AdminController@deleteAnswer')->name('delete_answer');
