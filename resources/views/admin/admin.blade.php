@@ -31,13 +31,13 @@ setTimeout(function () {
     </script>
 
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="/admin">Панель администратора</a> 
+            <a class="navbar-brand" href="{{route('admin')}}">Панель администратора</a>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <a class="navbar-brand" style="float: right;position: relative;left: 95%;" href="/logout">Выйти</a>
+                <a class="navbar-brand" style="float: right;position: relative;left: 95%;" href="{{route('logout')}}">Выйти</a>
 
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
@@ -52,10 +52,10 @@ setTimeout(function () {
                 <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin">Обзор <span class="sr-only"></span></a>
+                            <a class="nav-link" href="{{route('admin')}}">Обзор <span class="sr-only"></span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/users">Администраторы</a>
+                            <a class="nav-link" href="{{route('user.index')}}">Администраторы</a>
                         </li>
                         <br>
 
@@ -64,23 +64,23 @@ setTimeout(function () {
                         </li>                       
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/answer/add">Список неотвеченных</a>
+                            <a class="nav-link" href="{{route('answer')}}">Список неотвеченных</a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/answer/hided">Список скрытых</a>
+                            <a class="nav-link" href="{{route('hided')}}">Список скрытых</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/answer/manage">Список всех вопросов</a>
+                            <a class="nav-link" href="{{route('manage')}}">Список всех вопросов</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/answer/category/">Список вопросов по категориям</a>
+                            <a class="nav-link" href="{{route('showByCategory')}}">Список вопросов по категориям</a>
                         </li>
 
                         <br>
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/categories">Управление категориями</a>
+                            <a class="nav-link" href="{{route('categories')}}">Управление категориями</a>
                         </li>
 
                         <br>        
