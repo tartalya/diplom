@@ -41,4 +41,14 @@ class Faq extends Model
         }
         parent::save($options);
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status_id', 3);
+    }
+
+    public function scopeNotAnswered($query)
+    {
+        return $query->where('status_id', 1);
+    }
 }

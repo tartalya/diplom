@@ -47,8 +47,8 @@
                         </td>
 
                         <td>{{$category->faq()->count()}}</td>
-                        <td>{{$category->faq()->where('status_id', 3)->count()}}</td>
-                        <td>{{$category->faq()->where('status_id', 1)->count()}}</td>
+                        <td>{{$category->faq()->published()->count()}}</td>
+                        <td>{{$category->faq()->notAnswered()->count()}}</td>
 
                         <td>
 
