@@ -39,4 +39,8 @@ class Category extends Model
         parent::create($attributes);
     }
 
+    public function faq()
+    {
+        return $this->hasOne('App\Faq');
+    }
 }
