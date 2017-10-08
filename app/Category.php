@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Log;
+use App\Faq;
 
 class Category extends Model
 {
@@ -15,9 +16,11 @@ class Category extends Model
         if (is_array($ids)) {
             foreach ($ids as $id) {
                 Log::write('Удалил категорию ' . $id . ' ' . self::where('id', $id)->first()->category_name);
+                Faq::where('category_id', $id)->delete();
             }
         } else {
             Log::write('Удалил категорию ' . $ids . ' ' . self::where('id', $ids)->first()->category_name);
+            Faq::where('category_id', $ids)->delete();
         }
         parent::destroy($ids);
     }

@@ -36,7 +36,6 @@ class CategoryController extends Controller
     public function deleteCategory()
     {
         if (Request::input('category_id')) {
-            Faq::where('category_id', Request::input('category_id'))->delete();
             Category::destroy(Request::input('category_id'));
             return Redirect::back()->with('msg', 'Категория успешно удалена');
         } else {
